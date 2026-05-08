@@ -282,7 +282,7 @@ function getSaintPos(team,idx,elapsedMs){
   return{x:wps[wps.length-1].x,y:wps[wps.length-1].y,dead:false,reached:true};
 }
 function getActiveSaints(){
-  if(!gameActive||gameStartTime===0)return[];
+  if(gameStartTime===0)return[];
   const elapsed=Date.now()-gameStartTime;const saints=[];
   for(const team of['A','B'])for(let i=0;i<NUM_SAINTS;i++){const s=getSaintPos(team,i,elapsed);saints.push({id:team+i,team,idx:i,...s});}
   return saints;
@@ -290,7 +290,7 @@ function getActiveSaints(){
 
 // WAVE PROCESSING
 function processWaves(){
-  if(!gameActive||gameStartTime===0)return;
+  if(gameStartTime===0)return;
   const elapsed=(Date.now()-gameStartTime)/1000;
   WAVES.forEach(([t,list],wi)=>{
     if(elapsed>=t&&!processedWaves.has(wi)){
@@ -405,7 +405,7 @@ function render(ts){
   drawHeaven(ts);
   particles=particles.filter(p=>p.life>0);
   particles.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.life-=.07;const pp=ws(p.x,p.y);ctx.fillStyle=`rgba(${p.col},${p.life})`;ctx.beginPath();ctx.arc(pp.x,pp.y,p.r*p.life+1,0,Math.PI*2);ctx.fill();});
-  if(gameActive){
+  if(gameStartTime>0){
     const saints=getActiveSaints();
     saints.forEach(s=>drawSaint(s,ts));
     localEnemies.forEach(e=>drawEnemy(e));
@@ -598,7 +598,10 @@ function setupListeners(){
     if(pvsActive&&Date.now()>pvsEnd)pvsActive=false;
     if(d.gameStartTime)gameStartTime=d.gameStartTime;
     if(ns==='reset'&&!isGM){if(loopId)clearInterval(loopId);if(syncId)clearInterval(syncId);listenersSetup=false;document.getElementById('name-inp').value='';go('entry');}
-    else if(ns==='playing'&&!gameActive&&!isGM&&myTeam){gameActive=true;alive=true;dying=false;localEnemies=[];processedWaves=new Set();go('game');startGameLoop();}
+    else if(ns==='playing'&&!gameActive&&!isGM&&myTeam){
+      // gameStartTime 보장: Firebase 값 없으면 현재 시간 사용
+      if(!gameStartTime||gameStartTime===0) gameStartTime=Date.now();
+      gameActive=true;alive=true;dying=false;localEnemies=[];processedWaves=new Set();go('game');startGameLoop();}
     else if(ns==='lobby'&&gameActive&&!isGM){gameActive=false;if(loopId)clearInterval(loopId);if(syncId)clearInterval(syncId);go('lobby');}
     else if(d.winner&&ns==='ended'&&!isGM){gameActive=false;showEnd(d.winner,d.arrivedA||0,d.arrivedB||0);}
   });
