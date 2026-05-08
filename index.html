@@ -449,6 +449,10 @@ function updateEnemies(saints){
     if(collidesWall(e.x,e.y,et.r)){
       const safe=safePos(e.x,e.y,et.r);e.x=safe.x;e.y=safe.y;
     }
+
+    // 타겟까지 거리 계산
+    const dd=Math.hypot(tx-e.x,ty-e.y);
+
     if(dd>et.r+10){
       const mv=moveSlide(e.x,e.y,(tx-e.x)/dd*et.spd,(ty-e.y)/dd*et.spd,et.r);
       e.x=mv.x;e.y=mv.y;
