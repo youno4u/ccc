@@ -320,55 +320,45 @@ document.addEventListener("touchmove",e=>{if(!canvas.classList.contains("vis"))r
 document.addEventListener("touchend",e=>{if(!canvas.classList.contains("vis"))return;e.preventDefault();for(const t of e.changedTouches){jEn(jL,t);jEn(jR,t);}},{passive:false});
 
 // ── 성도 위치 (결정론적, 경로 따라 정확히) ──────────
+// 안전 스폰 위치 찾기 (벽 안에 있으면 y 조정)
+function safePos(x,y,r){
+  if(!collidesWall(x,y,r))return{x,y};
+  // 갭 y 후보들 시도
+  for(const gy of[350,220,480,150,550,70,630]){
+    if(!collidesWall(x,gy,r))return{x,y:gy};
+  }
+  // y를 10씩 이동
+  for(let dy=10;dy<300;dy+=10){
+    if(!collidesWall(x,y+dy,r))return{x,y:y+dy};
+    if(!collidesWall(x,y-dy,r))return{x,y:y-dy};
+  }
+  return{x:50,y:350}; // fallback: 출발점 근처
+}
+
 function getSaintPos(idx,elapsedMs){
   const wps=SAINT_WP;
   const sId="s"+idx;
   const hp=saintHPs[sId]??SAINT_MAX_HP;
-  // 사망한 성도
   if(hp<=0)return{x:wps[0].x,y:wps[0].y,hp:0,dead:true,reached:false};
 
-  // 전체 경로 길이
-  let totalLen=0;
-  const segLens=[];
+  let totalLen=0;const segLens=[];
   for(let i=1;i<wps.length;i++){
     const dl=Math.hypot(wps[i].x-wps[i-1].x,wps[i].y-wps[i-1].y);
     segLens.push(dl);totalLen+=dl;
   }
-  // 각 성도마다 3초 간격으로 출발
+  // 성도마다 3초 간격 출발
   const offset=idx*3000;
   const elapsed=Math.max(0,elapsedMs-offset);
-  const maxX=heavenReached?HEAVEN.x:frontier;
   const rawDist=elapsed/1000*SAINT_SPD*60;
 
-  // 경로 따라 이동 (frontier 제한)
+  // 경로 따라 그냥 이동 (제한 없음)
   let rem=rawDist;
   for(let i=0;i<segLens.length;i++){
-    const wpNextX=wps[i+1].x;
     if(rem<=segLens[i]){
       const t=rem/segLens[i];
-      const px=wps[i].x+(wps[i+1].x-wps[i].x)*t;
-      const py=wps[i].y+(wps[i+1].y-wps[i].y)*t;
-      // frontier 제한
-      if(px>maxX){
-        // 현재 세그먼트에서 maxX까지
-        const tMax=(maxX-wps[i].x)/(wps[i+1].x-wps[i].x+0.001);
-        const clampedT=Math.max(0,Math.min(t,tMax));
-        return{
-          x:wps[i].x+(wps[i+1].x-wps[i].x)*clampedT,
-          y:wps[i].y+(wps[i+1].y-wps[i].y)*clampedT,
-          hp,dead:false,reached:false
-        };
-      }
-      return{x:px,y:py,hp,dead:false,reached:false};
-    }
-    // 다음 세그먼트로
-    if(wps[i+1].x>maxX){
-      // 이 세그먼트 끝이 frontier 초과
-      const tMax=(maxX-wps[i].x)/(wps[i+1].x-wps[i].x+0.001);
-      const clampedT=Math.max(0,Math.min(1,tMax));
       return{
-        x:wps[i].x+(wps[i+1].x-wps[i].x)*clampedT,
-        y:wps[i].y+(wps[i+1].y-wps[i].y)*clampedT,
+        x:wps[i].x+(wps[i+1].x-wps[i].x)*t,
+        y:wps[i].y+(wps[i+1].y-wps[i].y)*t,
         hp,dead:false,reached:false
       };
     }
@@ -383,26 +373,58 @@ function getActiveSaints(){
   return Array.from({length:NUM_SAINTS},(_,i)=>({idx:i,...getSaintPos(i,elapsed),"id":"s"+i}));
 }
 
-// ── 웨이브 처리 ───────────────────────────────────────
-function processWaves(){
+// ── 웨이브 처리 (연속 랜덤 스폰) ────────────────────
+let lastWaveTime=0,waveCount=0;
+const WAVE_INTERVAL=10000; // 10초마다 웨이브
+// X 구간별 적 스폰 가능 범위 (장벽 사이 공간)
+const SPAWN_XZONES=[550,750,1000,1200,1450,1700,1950,2200,2450,2700,2950,3200,3450,3700,3950,4200,4450];
+
+function getEnemyTypeForProgress(progress){
+  // progress: 0~1 (게임 진행도, 적 처치 + 시간 기반)
+  if(progress<0.15)return Math.random()<0.9?'yuhok':'uisim';
+  if(progress<0.3) return Math.random()<0.5?'yuhok':Math.random()<0.5?'uisim':'duryum';
+  if(progress<0.45)return Math.random()<0.4?'uisim':Math.random()<0.5?'gyoman':'duryum';
+  if(progress<0.6) return Math.random()<0.35?'gyoman':Math.random()<0.5?'hibak':'duryum';
+  if(progress<0.75)return Math.random()<0.4?'hibak':Math.random()<0.5?'sesang':'gyoman';
+  if(progress<0.9) return Math.random()<0.5?'sesang':Math.random()<0.5?'gyoman':'hibak';
+  return Math.random()<0.5?'guardian':Math.random()<0.5?'sesang':'hibak';
+}
+
+function spawnWave(){
   if(gameStartTime===0)return;
-  const elapsed=(Date.now()-gameStartTime)/1000;
-  WAVES.forEach(([t,list],wi)=>{
-    if(elapsed>=t&&!processedWaves.has(wi)){
-      processedWaves.add(wi);
-      list.forEach((e,ei)=>{
-        const id="w"+wi+"e"+ei;
-        if(!localEnemies.find(le=>le.id===id)){
-          const et=ETYPES[e.t];
-          const hp=enemyHPs[id]??et.hp;
-          localEnemies.push({id,type:e.t,x:e.x,y:e.y,hp,maxHp:et.hp,lastAtk:0,lastShot:0});
-          if(enemyHPs[id]===undefined)
-            setDoc(EREF(id),{hp:et.hp,dead:false},{merge:true}).catch(()=>{});
-        }
-      });
-    }
-  });
+  const now=Date.now();
+  if(now-lastWaveTime<WAVE_INTERVAL)return;
+  lastWaveTime=now;waveCount++;
+
+  // 게임 진행도 (웨이브 수 기반, 최대 1.0)
+  const progress=Math.min(1,waveCount/30);
+  // 이번 웨이브 적 수: 18~35마리 (진행도에 따라 증가)
+  const count=Math.floor(18+progress*17);
+
+  let spawnedCount=0;
+  for(let i=0;i<count;i++){
+    const type=getEnemyTypeForProgress(progress);
+    const et=ETYPES[type];
+    // 스폰 위치: 맵 상단(y=25~80) 또는 하단(y=620~675), x는 랜덤 구간
+    const xzone=SPAWN_XZONES[Math.floor(Math.random()*SPAWN_XZONES.length)];
+    const rawX=xzone+(Math.random()-.5)*80;
+    const rawY=Math.random()<0.5?45:655;
+    const sp=safePos(rawX,rawY,et.r);
+    const id=`wave${waveCount}e${i}`;
+    if(localEnemies.find(le=>le.id===id))continue;
+    localEnemies.push({id,type,x:sp.x,y:sp.y,hp:et.hp,maxHp:et.hp,lastAtk:0,lastShot:0});
+    setDoc(EREF(id),{hp:et.hp,dead:false},{merge:true}).catch(()=>{});
+    spawnedCount++;
+  }
+
   // Firebase HP 동기화
+  localEnemies.forEach(e=>{const h=enemyHPs[e.id];if(h!==undefined)e.hp=h;});
+  localEnemies=localEnemies.filter(e=>e.hp>0);
+}
+
+function processWaves(){
+  spawnWave();
+  // Firebase HP 동기화 (매 프레임)
   localEnemies.forEach(e=>{const h=enemyHPs[e.id];if(h!==undefined)e.hp=h;});
   localEnemies=localEnemies.filter(e=>e.hp>0);
 }
@@ -423,8 +445,10 @@ function updateEnemies(saints){
       if(d<nearPD&&d<150){nearPD=d;tx=p.x;ty=p.y;targetIsSaint=false;}
     });
 
-    // 이동 (벽 통과)
-    const dd=Math.hypot(tx-e.x,ty-e.y);
+    // 벽에 낀 적 밀어내기
+    if(collidesWall(e.x,e.y,et.r)){
+      const safe=safePos(e.x,e.y,et.r);e.x=safe.x;e.y=safe.y;
+    }
     if(dd>et.r+10){
       const mv=moveSlide(e.x,e.y,(tx-e.x)/dd*et.spd,(ty-e.y)/dd*et.spd,et.r);
       e.x=mv.x;e.y=mv.y;
@@ -660,14 +684,14 @@ function drawHUD(ts){
   ctx.fillStyle="white";ctx.font="bold 10px Noto Sans KR";ctx.textAlign="right";ctx.fillText(`${Math.max(0,Math.round(myHp))}/${myMaxHp}`,W-8,15);
   const xpLv=LEVELS[Math.min(myLevel+1,LEVELS.length-1)];const xpPct=myLevel>=LEVELS.length-1?1:Math.min(1,(myXp-lv.xp)/(xpLv.xp-lv.xp));
   ctx.fillStyle="#0f172a";ctx.fillRect(bx,24,bw,5);if(bw*xpPct>0){ctx.fillStyle="rgba(250,204,21,.6)";ctx.fillRect(bx,24,bw*xpPct,5);}
-  // 타이머
+  // 경과 시간 표시 (타이머 없음)
   if(gameStartTime>0){
-    const elapsed=Math.floor((Date.now()-gameStartTime)/1000);const rem=Math.max(0,GAME_DURATION-elapsed);
-    const m=Math.floor(rem/60),s=rem%60;
-    ctx.fillStyle=rem<60?"#ef4444":rem<120?"#fbbf24":"rgba(255,255,255,.7)";
-    ctx.font="bold 14px Noto Sans KR";ctx.textAlign="center";ctx.textBaseline="middle";ctx.fillText(`${m}:${String(s).padStart(2,"0")}`,W/2,21);
-    if(isGM){document.getElementById("gm-timer").textContent=`${m}:${String(s).padStart(2,"0")}`;}
-    if(rem<=0&&gameActive)endGame(false);
+    const elapsed=Math.floor((Date.now()-gameStartTime)/1000);
+    const m=Math.floor(elapsed/60),s=elapsed%60;
+    ctx.fillStyle="rgba(255,255,255,.55)";
+    ctx.font="bold 13px Noto Sans KR";ctx.textAlign="center";ctx.textBaseline="middle";
+    ctx.fillText(`${m}:${String(s).padStart(2,"0")}`,W/2,21);
+    if(isGM)document.getElementById("gm-timer").textContent=`${m}:${String(s).padStart(2,"0")}`;
   }
   // 천국 방향 화살표
   {const dx=HEAVEN.x-myX,dy=HEAVEN.y-myY;const dist=Math.round(Math.hypot(dx,dy));const angle=Math.atan2(dy,dx);
@@ -732,12 +756,6 @@ function startGameLoop(){
       const mv=moveSlide(myX,myY,lx*spd,ly*spd,LEVELS[myLevel].r);
       myX=Math.max(22,Math.min(GW-22,mv.x));myY=Math.max(22,Math.min(GH-22,mv.y));
     }
-    // 프론티어 갱신
-    frontier=myX;Object.values(allPlayers).forEach(p=>{if((p.x||0)>frontier)frontier=p.x;});
-    // 천국 도달 체크
-    if(!heavenReached&&Math.hypot(myX-HEAVEN.x,myY-HEAVEN.y)<HEAVEN.r+LEVELS[myLevel].r+10){
-      heavenReached=true;setDoc(STATE,{heavenReached:true},{merge:true}).catch(()=>{});
-    }
     // 발사
     if(Math.hypot(rx,ry)>.08){const now=Date.now();const cd=Math.max(160,460-myLevel*45);if(now-lastFire>cd){lastFire=now;playerFire();}}
     // 적/총알
@@ -745,12 +763,10 @@ function startGameLoop(){
     const saints=getActiveSaints();
     updateEnemies(saints);
     updateBullets(saints);
-    // 성도 전원 도착 체크
-    if(heavenReached&&saints.every(s=>s.reached||s.dead)){
-      const allReached=saints.filter(s=>s.reached).length;
-      if(allReached>0)endGame(true);
+    // 승리: 성도 전원 도착
+    if(saints.every(s=>s.reached||s.dead)&&saints.some(s=>s.reached)){
+      endGame(true);
     }
-    if(gameStartTime>0&&(Date.now()-gameStartTime)/1000>=GAME_DURATION)endGame(false);
   },33);
   if(syncId)clearInterval(syncId);
   syncId=setInterval(()=>{
@@ -791,10 +807,12 @@ function setupListeners(){
     if(ns==="reset"&&!isGM){
       if(loopId)clearInterval(loopId);if(syncId)clearInterval(syncId);listenersSetup=false;
       gameStartTime=0;heavenReached=false;pvsActive=false;localEnemies=[];processedWaves=new Set();localBullets=[];
+      waveCount=0;lastWaveTime=0;
       document.getElementById("name-inp").value="";go("entry");
     } else if(ns==="playing"&&!gameActive&&!isGM&&myName){
       if(!gameStartTime||gameStartTime===0)gameStartTime=Date.now();
       gameActive=true;alive=true;dying=false;localEnemies=[];processedWaves=new Set();localBullets=[];
+      waveCount=0;lastWaveTime=0;
       go("game");startGameLoop();
     } else if(ns==="ended"&&!isGM){
       gameActive=false;showEnd(d.success||false);
