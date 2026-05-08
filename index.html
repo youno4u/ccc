@@ -246,9 +246,21 @@ let lx=0,ly=0,rx=0,ry=0;
 function jSt(j,t){j.id=t.identifier;j.bx=t.clientX;j.by=t.clientY;j.cx=t.clientX;j.cy=t.clientY;j.active=true;}
 function jMv(j,t){if(t.identifier!==j.id)return;j.cx=t.clientX;j.cy=t.clientY;let dx=j.cx-j.bx,dy=j.cy-j.by,d=Math.hypot(dx,dy);if(d>JR){dx=dx/d*JR;dy=dy/d*JR;}if(j===jL){lx=dx/JR;ly=dy/JR;}else{rx=dx/JR;ry=dy/JR;}}
 function jEn(j,t){if(t.identifier!==j.id)return;j.active=false;j.id=-1;if(j===jL){lx=0;ly=0;}else{rx=0;ry=0;}}
-document.addEventListener('touchstart',e=>{e.preventDefault();for(const t of e.changedTouches){const isL=t.clientX<W/2;if(isL&&!jL.active)jSt(jL,t);else if(!isL&&!jR2.active)jSt(jR2,t);}},{passive:false});
-document.addEventListener('touchmove',e=>{e.preventDefault();for(const t of e.changedTouches){jMv(jL,t);jMv(jR2,t);}},{passive:false});
-document.addEventListener('touchend',e=>{e.preventDefault();for(const t of e.changedTouches){jEn(jL,t);jEn(jR2,t);}},{passive:false});
+document.addEventListener('touchstart',e=>{
+  if(!canvas.classList.contains('vis'))return; // 게임 중에만 처리
+  e.preventDefault();
+  for(const t of e.changedTouches){const isL=t.clientX<W/2;if(isL&&!jL.active)jSt(jL,t);else if(!isL&&!jR2.active)jSt(jR2,t);}
+},{passive:false});
+document.addEventListener('touchmove',e=>{
+  if(!canvas.classList.contains('vis'))return;
+  e.preventDefault();
+  for(const t of e.changedTouches){jMv(jL,t);jMv(jR2,t);}
+},{passive:false});
+document.addEventListener('touchend',e=>{
+  if(!canvas.classList.contains('vis'))return;
+  e.preventDefault();
+  for(const t of e.changedTouches){jEn(jL,t);jEn(jR2,t);}
+},{passive:false});
 
 // SAINT POSITION (deterministic)
 function getSaintPos(team,idx,elapsedMs){
