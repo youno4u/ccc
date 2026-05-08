@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>성도의 견인 — 송출</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;700;900&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:#050d0a;overflow:hidden;width:100vw;height:100vh;font-family:'Noto Sans KR',sans-serif;}
+canvas{display:block;width:100%;height:100%;}
+#lobby{position:fixed;inset:0;background:rgba(5,13,10,.93);backdrop-filter:blur(6px);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1rem;color:white;}
+#lobby.hidden{display:none;}
+.lb-logo{font-size:5rem;font-weight:900;color:#4ade80;text-shadow:0 0 50px rgba(74,222,128,.5);}
+.lb-tit{font-size:2.2rem;font-weight:900;color:#4ade80;}
+.lb-sub{font-size:1.1rem;color:#475569;}
+#lb-cnt{font-size:1.3rem;font-weight:700;color:#1e293b;}
+#pvs-banner{position:fixed;top:0;left:0;right:0;padding:.6rem;text-align:center;font-size:1.1rem;font-weight:900;color:#fde68a;display:none;z-index:10;background:linear-gradient(90deg,transparent,rgba(250,204,21,.2),transparent);animation:pb 1.5s ease-in-out infinite;}
+@keyframes pb{0%,100%{opacity:.8}50%{opacity:1}}
+#win{position:fixed;inset:0;background:rgba(0,0,0,.88);display:none;flex-direction:column;align-items:center;justify-content:center;gap:1.5rem;color:white;z-index:20;}
+#win.show{display:flex;animation:wIn 1s ease;}
+@keyframes wIn{from{opacity:0;transform:scale(.9)}to{opacity:1;transform:scale(1)}}
+.win-tit{font-size:4rem;font-weight:900;text-align:center;}
+.win-verse{padding:1.2rem 2rem;border:1px solid rgba(74,222,128,.3);border-radius:1rem;background:rgba(74,222,128,.07);font-size:1.1rem;color:#bbf7d0;text-align:center;line-height:1.7;max-width:600px;}
+</style>
+</head>
+<body>
+<canvas id="c"></canvas>
+<div id="pvs-banner"></div>
+<div id="lobby">
+  <div class="lb-logo">⚔</div>
+  <div class="lb-tit">성도의 견인</div>
+  <div class="lb-sub">선생님이 시작하면 게임이 시작됩니다</div>
+  <div id="lb-cnt"></div>
+</div>
+<div id="win">
+  <div style="font-size:5rem;">✝</div>
+  <div class="win-tit" id="win-tit"></div>
+  <div class="win-verse">
+    "내가 그들에게 영생을 주노니 영원히 멸망하지 아니할 것이요<br>
+    또 그들을 내 손에서 빼앗을 자가 없느니라"<br>
+    <span style="font-size:.9rem;color:#86efac;">— 요한복음 10:28</span>
+  </div>
+</div>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+import { getFirestore,doc,onSnapshot,collection } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+const FB=initializeApp({apiKey:"AIzaSyCfyjgtiDVD4Wsd9iGb9tEdrOGFYxxN2Tw",authDomain:"kingdomgenius.firebaseapp.com",projectId:"kingdomgenius",storageBucket:"kingdomgenius.firebasestorage.app",messagingSenderId:"385557748196",appId:"1:385557748196:web:457b999a38e4982f188ff1"});
+const auth=getAuth(FB),db=getFirestore(FB);
+const BASE='kingdom_genius_games/pvs2_room';
+const STATE=doc(db,BASE,'data/state');
+const PCOL=collection(db,BASE,'players');
+const ECOL=collection(db,BASE,'enemies');
+const SCOL=collection(db,BASE,'saints');
+
+const GW=4000,GH=900;
+const HEAVEN={x:2000,y:450,r:75};
+const SPAWN={A:{x:100,y:450},B:{x:3900,y:450}};
+const GAME_DURATION=480;
+const PVS_MS=15000;
+
+const SAINT_WP={
+  A:[{x:100,y:450},{x:450,y:450},{x:650,y:280},{x:950,y:280},{x:1200,y:450},{x:1500,y:500},{x:1750,y:440},{x:1950,y:380},{x:2000,y:450}],
+  B:[{x:3900,y:450},{x:3550,y:450},{x:3350,y:280},{x:3050,y:280},{x:2800,y:450},{x:2500,y:500},{x:2250,y:440},{x:2050,y:380},{x:2000,y:450}]
+};
+const NUM_SAINTS=5,SAINT_SPD=0.30,SAINT_MAX_HP=80;
+
+const ETYPES={
+  skeleton:{hp:70,spd:1.7,r:14,col:'#94a3b8',icon:'💀'},
+  demon:   {hp:150,spd:2.2,r:17,col:'#f43f5e',icon:'😈'},
+  giant:   {hp:320,spd:1.5,r:22,col:'#7c3aed',icon:'👹'},
+  boss:    {hp:700,spd:1.3,r:28,col:'#dc2626',icon:'👿'},
+};
+const WAVES=[
+  [8,  [{t:'skeleton',x:600,y:0},{t:'skeleton',x:1000,y:0},{t:'skeleton',x:600,y:GH},{t:'skeleton',x:1000,y:GH},{t:'skeleton',x:3400,y:0},{t:'skeleton',x:3000,y:0},{t:'skeleton',x:3400,y:GH},{t:'skeleton',x:3000,y:GH}]],
+  [45, [{t:'skeleton',x:500,y:0},{t:'demon',x:800,y:0},{t:'skeleton',x:700,y:GH},{t:'demon',x:1100,y:GH},{t:'demon',x:3200,y:0},{t:'skeleton',x:3500,y:0},{t:'demon',x:2800,y:GH},{t:'skeleton',x:3100,y:GH}]],
+  [95, [{t:'demon',x:600,y:0},{t:'giant',x:900,y:0},{t:'demon',x:800,y:GH},{t:'giant',x:1100,y:GH},{t:'giant',x:3100,y:0},{t:'demon',x:3400,y:0},{t:'giant',x:2900,y:GH},{t:'demon',x:3200,y:GH}]],
+  [160,[{t:'giant',x:700,y:0},{t:'demon',x:1000,y:0},{t:'giant',x:1300,y:0},{t:'giant',x:900,y:GH},{t:'demon',x:600,y:GH},{t:'giant',x:3300,y:0},{t:'giant',x:3100,y:0},{t:'demon',x:2700,y:GH},{t:'giant',x:2900,y:GH}]],
+  [235,[{t:'boss',x:800,y:0},{t:'giant',x:600,y:GH},{t:'giant',x:1200,y:0},{t:'demon',x:1000,y:GH},{t:'boss',x:3200,y:0},{t:'giant',x:3400,y:GH},{t:'giant',x:3000,y:0},{t:'demon',x:2800,y:GH}]],
+  [320,[{t:'boss',x:700,y:0},{t:'boss',x:1100,y:GH},{t:'giant',x:900,y:0},{t:'giant',x:1300,y:GH},{t:'boss',x:3300,y:0},{t:'boss',x:2900,y:GH},{t:'giant',x:3100,y:0},{t:'giant',x:2700,y:GH}]],
+  [410,[{t:'boss',x:600,y:0},{t:'boss',x:800,y:GH},{t:'boss',x:1000,y:0},{t:'boss',x:1200,y:GH},{t:'giant',x:700,y:0},{t:'boss',x:3400,y:0},{t:'boss',x:3200,y:GH},{t:'boss',x:3000,y:0},{t:'boss',x:2800,y:GH}]],
+];
+const WALLS=[
+  {x:0,y:0,w:GW,h:25},{x:0,y:GH-25,w:GW,h:25},{x:0,y:0,w:25,h:GH},{x:GW-25,y:0,w:25,h:GH},
+  {x:470,y:25,w:35,h:160},{x:470,y:245,w:35,h:155},{x:470,y:460,w:35,h:20},{x:470,y:540,w:35,h:195},{x:470,y:790,w:35,h:85},
+  {x:830,y:25,w:35,h:75},{x:830,y:160,w:35,h:195},{x:830,y:420,w:35,h:55},{x:830,y:540,w:35,h:180},{x:830,y:790,w:35,h:85},
+  {x:1230,y:25,w:35,h:190},{x:1230,y:275,w:35,h:185},{x:1230,y:510,w:35,h:45},{x:1230,y:615,w:35,h:260},
+  {x:1590,y:90,w:35,h:155},{x:1590,y:330,w:35,h:105},{x:1590,y:450,w:35,h:50},{x:1590,y:580,w:35,h:160},{x:1590,y:810,w:35,h:65},
+  {x:1820,y:180,w:32,h:32},{x:1820,y:680,w:32,h:32},{x:2148,y:180,w:32,h:32},{x:2148,y:680,w:32,h:32},
+  {x:3495,y:25,w:35,h:160},{x:3495,y:245,w:35,h:155},{x:3495,y:460,w:35,h:20},{x:3495,y:540,w:35,h:195},{x:3495,y:790,w:35,h:85},
+  {x:3135,y:25,w:35,h:75},{x:3135,y:160,w:35,h:195},{x:3135,y:420,w:35,h:55},{x:3135,y:540,w:35,h:180},{x:3135,y:790,w:35,h:85},
+  {x:2735,y:25,w:35,h:190},{x:2735,y:275,w:35,h:185},{x:2735,y:510,w:35,h:45},{x:2735,y:615,w:35,h:260},
+  {x:2375,y:90,w:35,h:155},{x:2375,y:330,w:35,h:105},{x:2375,y:450,w:35,h:50},{x:2375,y:580,w:35,h:160},{x:2375,y:810,w:35,h:65},
+];
+
+const canvas=document.getElementById('c');
+const ctx=canvas.getContext('2d');
+let W,H;
+function resize(){W=canvas.width=window.innerWidth;H=canvas.height=window.innerHeight;}
+window.addEventListener('resize',resize);resize();
+const sx=()=>W/GW,sy=()=>H/GH;
+function wp(wx,wy){return{x:wx*sx(),y:wy*sy()};}
+
+let allPlayers={},saintHPs={},enemyHPs={};
+let gameStartTime=0,pvsActive=false,pvsTeam=null,pvsEnd=0;
+let localEnemies=[],processedWaves=new Set();
+const STARS=Array.from({length:300},()=>({x:Math.random()*GW,y:Math.random()*GH,r:Math.random()*1.2+.3,a:Math.random()*.3+.06}));
+
+function getSaintPos(team,idx,elapsedMs){
+  const wps=SAINT_WP[team];const sId=team+idx;const hp=saintHPs[sId]??SAINT_MAX_HP;
+  if(hp<=0)return{x:wps[0].x,y:wps[0].y,dead:true,reached:false};
+  let totalLen=0;const segLens=[];
+  for(let i=1;i<wps.length;i++){const dl=Math.hypot(wps[i].x-wps[i-1].x,wps[i].y-wps[i-1].y);segLens.push(dl);totalLen+=dl;}
+  const offset=idx*20;const elapsedSec=Math.max(0,(elapsedMs-offset*1000/20)/1000);
+  const dist=Math.min(elapsedSec*SAINT_SPD*60,totalLen);
+  if(dist>=totalLen)return{x:wps[wps.length-1].x,y:wps[wps.length-1].y,dead:false,reached:true};
+  let rem=dist;
+  for(let i=0;i<segLens.length;i++){if(rem<=segLens[i]){const t=rem/segLens[i];return{x:wps[i].x+(wps[i+1].x-wps[i].x)*t,y:wps[i].y+(wps[i+1].y-wps[i].y)*t,dead:false,reached:false};}rem-=segLens[i];}
+  return{x:wps[wps.length-1].x,y:wps[wps.length-1].y,dead:false,reached:true};
+}
+function getActiveSaints(){
+  if(gameStartTime===0)return[];const elapsed=Date.now()-gameStartTime;const saints=[];
+  for(const team of['A','B'])for(let i=0;i<NUM_SAINTS;i++){const s=getSaintPos(team,i,elapsed);saints.push({id:team+i,team,idx:i,...s});}
+  return saints;
+}
+
+function processWaves(){
+  if(gameStartTime===0)return;const elapsed=(Date.now()-gameStartTime)/1000;
+  WAVES.forEach(([t,list],wi)=>{
+    if(elapsed>=t&&!processedWaves.has(wi)){
+      processedWaves.add(wi);
+      list.forEach((e,ei)=>{
+        const id=`w${wi}e${ei}`;if(!localEnemies.find(le=>le.id===id)){
+          const et=ETYPES[e.t];localEnemies.push({id,type:e.t,x:e.x,y:e.y,hp:enemyHPs[id]??et.hp,maxHp:et.hp});
+        }
+      });
+    }
+  });
+  localEnemies.forEach(e=>{const fbHp=enemyHPs[e.id];if(fbHp!==undefined)e.hp=fbHp;});
+  localEnemies=localEnemies.filter(e=>e.hp>0);
+}
+
+function moveEnemies(saints){
+  localEnemies.forEach(e=>{
+    const et=ETYPES[e.type];let nearSaint=null,nearD=Infinity;
+    saints.filter(s=>!s.dead&&!s.reached).forEach(s=>{const d=Math.hypot(s.x-e.x,s.y-e.y);if(d<nearD){nearD=d;nearSaint=s;}});
+    if(!nearSaint)return;
+    const dd=Math.hypot(nearSaint.x-e.x,nearSaint.y-e.y);
+    if(dd>et.r+12){e.x+=(nearSaint.x-e.x)/dd*et.spd;e.y+=(nearSaint.y-e.y)/dd*et.spd;}
+  });
+}
+
+function render(ts){
+  processWaves();
+  const saints=getActiveSaints();
+  moveEnemies(saints);
+  const SX=sx(),SY=sy();
+  ctx.fillStyle='#050d0a';ctx.fillRect(0,0,W,H);
+  STARS.forEach(s=>{ctx.fillStyle=`rgba(255,255,255,${s.a})`;ctx.beginPath();ctx.arc(s.x*SX,s.y*SY,s.r,0,Math.PI*2);ctx.fill();});
+  // 길
+  ctx.fillStyle='rgba(10,22,10,.9)';ctx.fillRect(0,255*SY,W,(GH-510)*SY);
+  // 장애물
+  WALLS.forEach(w=>{ctx.fillStyle='#0d2010';ctx.fillRect(w.x*SX,w.y*SY,w.w*SX,w.h*SY);ctx.strokeStyle='rgba(74,222,128,.12)';ctx.lineWidth=1;ctx.strokeRect(w.x*SX,w.y*SY,w.w*SX,w.h*SY);});
+  // 스폰
+  ['A','B'].forEach(t=>{const sp=SPAWN[t];const tc=t==='A'?'59,130,246':'239,68,68';ctx.fillStyle=`rgba(${tc},.07)`;ctx.strokeStyle=`rgba(${tc},.35)`;ctx.lineWidth=2;ctx.strokeRect((sp.x-55)*SX,(sp.y-65)*SY,110*SX,130*SY);ctx.fillRect((sp.x-55)*SX,(sp.y-65)*SY,110*SX,130*SY);ctx.fillStyle=`rgba(${tc},.5)`;ctx.font=`bold ${12*Math.min(SX,SY)*2}px Noto Sans KR`;ctx.textAlign='center';ctx.fillText(`팀 ${t} 출발`,sp.x*SX,(sp.y-73)*SY);});
+  // 천국
+  const hx=HEAVEN.x*SX,hy=HEAVEN.y*SY,hr=HEAVEN.r*Math.min(SX,SY);
+  const pulse=.7+Math.sin(ts/500)*.3;
+  const og=ctx.createRadialGradient(hx,hy,0,hx,hy,hr*3.5);og.addColorStop(0,`rgba(250,204,21,${.25*pulse})`);og.addColorStop(1,'rgba(250,204,21,0)');
+  ctx.fillStyle=og;ctx.beginPath();ctx.arc(hx,hy,hr*3.5,0,Math.PI*2);ctx.fill();
+  ctx.fillStyle=`rgba(250,204,21,${.15*pulse})`;ctx.strokeStyle=`rgba(250,204,21,${.9*pulse})`;ctx.lineWidth=2.5;ctx.shadowBlur=25;ctx.shadowColor='#facc15';ctx.beginPath();ctx.arc(hx,hy,hr,0,Math.PI*2);ctx.fill();ctx.stroke();ctx.shadowBlur=0;
+  ctx.font=`bold ${hr*.85}px sans-serif`;ctx.fillStyle=`rgba(250,204,21,${pulse})`;ctx.textAlign='center';ctx.textBaseline='middle';ctx.shadowBlur=8;ctx.shadowColor='#facc15';ctx.fillText('✝',hx,hy);ctx.shadowBlur=0;
+  ctx.font=`bold ${12*Math.min(SX,SY)*2}px Noto Sans KR`;ctx.fillStyle=`rgba(250,204,21,.8)`;ctx.textBaseline='top';ctx.fillText('천 국',hx,hy+hr+5);
+  // 성도
+  saints.forEach(s=>{
+    if(s.dead||s.reached)return;const p={x:s.x*SX,y:s.y*SY};const r=13*Math.min(SX,SY);
+    const isPvs=pvsActive&&pvsTeam===s.team;const hp=saintHPs[s.id]??SAINT_MAX_HP;const hpPct=hp/SAINT_MAX_HP;
+    ctx.shadowBlur=isPvs?22:8;ctx.shadowColor=isPvs?'#facc15':'rgba(255,255,255,.5)';
+    ctx.fillStyle=isPvs?'#fef08a':'rgba(255,255,255,.92)';ctx.beginPath();ctx.arc(p.x,p.y,r,0,Math.PI*2);ctx.fill();ctx.shadowBlur=0;
+    ctx.font=`bold ${r*.85}px sans-serif`;ctx.fillStyle='#0a1628';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText('✝',p.x,p.y);
+    const bw=r*2.5,bh=3*Math.min(SX,SY),bx=p.x-bw/2,by=p.y-r-bh-4;
+    ctx.fillStyle='#0f172a';ctx.fillRect(bx,by,bw,bh);if(bw*hpPct>0){ctx.fillStyle=hpPct>.5?'#4ade80':hpPct>.25?'#fbbf24':'#ef4444';ctx.fillRect(bx,by,bw*hpPct,bh);}
+    ctx.fillStyle=s.team==='A'?'#93c5fd':'#fca5a5';ctx.font=`bold ${9*Math.min(SX,SY)*2}px Noto Sans KR`;ctx.textBaseline='top';ctx.fillText(s.team,p.x,p.y+r+2);
+  });
+  // 적
+  localEnemies.forEach(e=>{
+    const et=ETYPES[e.type];const p={x:e.x*SX,y:e.y*SY};const r=et.r*Math.min(SX,SY);const hpPct=e.hp/e.maxHp;
+    ctx.shadowBlur=10;ctx.shadowColor=et.col;ctx.fillStyle=et.col;ctx.beginPath();ctx.arc(p.x,p.y,r,0,Math.PI*2);ctx.fill();ctx.shadowBlur=0;
+    ctx.font=`bold ${r*.85}px sans-serif`;ctx.fillStyle='white';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(et.icon,p.x,p.y);
+    const bw=r*2.4,bh=3*Math.min(SX,SY),bx=p.x-bw/2,by=p.y-r-5;
+    ctx.fillStyle='#0f172a';ctx.fillRect(bx,by,bw,bh);if(bw*hpPct>0){ctx.fillStyle='#ef4444';ctx.fillRect(bx,by,bw*hpPct,bh);}
+  });
+  // 플레이어
+  Object.values(allPlayers).filter(p=>p.alive).forEach(p=>{
+    if(!p._rx){p._rx=p.x;p._ry=p.y;}p._rx+=(p.x-p._rx)*.15;p._ry+=(p.y-p._ry)*.15;
+    const px=p._rx*SX,py=p._ry*SY,r=16*Math.min(SX,SY);
+    const tc=p.team==='A'?'#3b82f6':'#ef4444';
+    ctx.shadowBlur=10;ctx.shadowColor=tc;ctx.fillStyle=tc;ctx.beginPath();ctx.arc(px,py,r,0,Math.PI*2);ctx.fill();ctx.shadowBlur=0;
+    ctx.font=`bold ${r*.52}px Noto Sans KR`;ctx.fillStyle='white';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText((p.name||'').slice(0,4),px,py);
+    const hpPct=Math.max(0,(p.hp||0)/(p.maxHp||100));const bw=r*2.6,bh=3*Math.min(SX,SY),bx=px-bw/2,by=py-r-6;
+    ctx.fillStyle='#0f172a';ctx.fillRect(bx,by,bw,bh);if(bw*hpPct>0){ctx.fillStyle=hpPct>.5?'#4ade80':hpPct>.25?'#fbbf24':'#ef4444';ctx.fillRect(bx,by,bw*hpPct,bh);}
+    ctx.font=`bold ${9*Math.min(SX,SY)*2}px Noto Sans KR`;ctx.fillStyle='rgba(255,255,255,.5)';ctx.textBaseline='top';ctx.fillText(`Lv${(p.level||0)+1}`,px,py+r+4);
+  });
+  // HUD
+  ctx.fillStyle='rgba(0,0,0,.6)';ctx.fillRect(0,0,W,36);
+  if(gameStartTime>0){const elapsed=Math.floor((Date.now()-gameStartTime)/1000);const rem=Math.max(0,GAME_DURATION-elapsed);const m=Math.floor(rem/60),s=rem%60;ctx.fillStyle=rem<60?'#ef4444':rem<120?'#fbbf24':'rgba(255,255,255,.7)';ctx.font=`bold ${16*Math.min(SX,SY)*2}px Noto Sans KR`;ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(`${m}:${String(s).padStart(2,'0')}`,W/2,18);}
+  const sA=getActiveSaints().filter(s=>s.team==='A');const sB=getActiveSaints().filter(s=>s.team==='B');
+  ctx.font=`bold ${13*Math.min(SX,SY)*2}px Noto Sans KR`;ctx.textAlign='left';ctx.textBaseline='middle';
+  ctx.fillStyle='#93c5fd';ctx.fillText(`🔵 팀A — 성도 ${sA.filter(s=>s.reached).length}/5 도착`,12,18);
+  ctx.textAlign='right';ctx.fillStyle='#fca5a5';ctx.fillText(`팀B — 성도 ${sB.filter(s=>s.reached).length}/5 도착 🔴`,W-12,18);
+  // 견인 배너
+  if(pvsActive&&Date.now()<pvsEnd){const banner=document.getElementById('pvs-banner');banner.style.display='block';banner.textContent=`✝ 팀 ${pvsTeam} 성도의 견인 — 아무것도 끊을 수 없다! ✝`;}
+  else{document.getElementById('pvs-banner').style.display='none';}
+  requestAnimationFrame(render);
+}
+requestAnimationFrame(render);
+
+function setup(){
+  onSnapshot(STATE,snap=>{
+    if(!snap.exists())return;const d=snap.data();const ns=d.gameStatus||'lobby';
+    pvsActive=d.perseveranceActive||false;pvsTeam=d.perseveranceTeam||null;pvsEnd=d.perseveranceEnd||0;
+    if(d.gameStartTime)gameStartTime=d.gameStartTime;
+    document.getElementById('lobby').classList.toggle('hidden',ns==='playing');
+    if(d.winner&&ns==='ended'){const tc=d.winner==='A'?'#93c5fd':d.winner==='draw'?'#fbbf24':'#fca5a5';document.getElementById('win-tit').textContent=d.winner==='draw'?'⚔ 무승부!':`팀 ${d.winner} 승리! ✝`;document.getElementById('win-tit').style.color=tc;document.getElementById('win').classList.add('show');}
+    else{document.getElementById('win').classList.remove('show');}
+    if(ns==='reset'){allPlayers={};localEnemies=[];processedWaves=new Set();gameStartTime=0;document.getElementById('win').classList.remove('show');}
+  });
+  onSnapshot(PCOL,snap=>{
+    const uids=new Set();snap.forEach(d=>{const uid=d.id;uids.add(uid);if(!allPlayers[uid])allPlayers[uid]={...d.data(),uid};else Object.assign(allPlayers[uid],d.data(),{uid});});
+    Object.keys(allPlayers).forEach(uid=>{if(!uids.has(uid))delete allPlayers[uid];});
+    const cnt={A:0,B:0};snap.forEach(d=>{const t=d.data().team;if(t)cnt[t]++;});
+    document.getElementById('lb-cnt').textContent=`🔵 팀A: ${cnt.A}명 | 🔴 팀B: ${cnt.B}명`;
+  });
+  onSnapshot(ECOL,snap=>{snap.forEach(d=>{enemyHPs[d.id]=d.data().hp??0;});});
+  onSnapshot(SCOL,snap=>{snap.forEach(d=>{saintHPs[d.id]=d.data().hp??SAINT_MAX_HP;});});
+}
+try{await signInAnonymously(auth);setup();}catch(e){console.error(e);}
+</script>
+</body>
+</html>
