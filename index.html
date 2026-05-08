@@ -7,29 +7,27 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0;}
-body{font-family:'Noto Sans KR',sans-serif;background:#0a1628;color:white;overflow:hidden;width:100vw;height:100vh;touch-action:none;user-select:none;}
+body{font-family:"Noto Sans KR",sans-serif;background:#0a1628;color:white;overflow:hidden;width:100vw;height:100vh;touch-action:none;user-select:none;}
 .screen{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1rem;padding:1.5rem;z-index:50;}
 .screen.hidden{display:none;}
 #entry{background:linear-gradient(160deg,#0a1628,#0d2040);}
 .logo{font-size:3.8rem;font-weight:900;color:#4ade80;text-shadow:0 0 30px rgba(74,222,128,.6);letter-spacing:-2px;}
 .logo-sub{font-size:.85rem;color:#334155;font-weight:700;}
-.inp{width:100%;max-width:300px;padding:.85rem;font-size:1.2rem;font-family:'Noto Sans KR',sans-serif;background:#1e293b;border:2px solid #334155;border-radius:.9rem;color:white;text-align:center;outline:none;}
+.inp{width:100%;max-width:300px;padding:.85rem;font-size:1.2rem;font-family:"Noto Sans KR",sans-serif;background:#1e293b;border:2px solid #334155;border-radius:.9rem;color:white;text-align:center;outline:none;}
 .inp:focus{border-color:#4ade80;}
-.big-btn{width:100%;max-width:300px;padding:1rem;font-size:1.1rem;font-weight:900;font-family:'Noto Sans KR',sans-serif;border:none;border-radius:.9rem;cursor:pointer;}
+.big-btn{width:100%;max-width:300px;padding:1rem;font-size:1.1rem;font-weight:900;font-family:"Noto Sans KR",sans-serif;border:none;border-radius:.9rem;cursor:pointer;}
 .btn-green{background:linear-gradient(135deg,#16a34a,#15803d);color:white;}
 .btn-blue{background:linear-gradient(135deg,#0ea5e9,#0284c7);color:white;}
 .big-btn:active{transform:scale(.97);}
-#gear{background:none;border:none;cursor:pointer;color:#1e293b;font-size:1.4rem;padding:.3rem;transition:color .2s,transform .3s;}
-#gear:hover{color:#334155;transform:rotate(60deg);}
+#gear{background:none;border:none;cursor:pointer;color:#1e293b;font-size:1.4rem;padding:.3rem;}
 #pw-modal{position:fixed;inset:0;background:rgba(0,0,0,.9);display:none;align-items:center;justify-content:center;z-index:300;}
 #pw-modal.vis{display:flex;}
 .pw-box{background:#1e293b;border:1px solid #334155;border-radius:1.5rem;padding:2rem 1.8rem;width:280px;display:flex;flex-direction:column;gap:1rem;align-items:center;}
-.pw-tit{font-size:1rem;font-weight:700;color:#94a3b8;}
-#pw-inp{width:100%;padding:.8rem;font-size:1.8rem;font-family:'Noto Sans KR',sans-serif;background:#0f172a;border:2px solid #334155;border-radius:.8rem;color:white;text-align:center;outline:none;letter-spacing:.4em;}
+#pw-inp{width:100%;padding:.8rem;font-size:1.8rem;font-family:"Noto Sans KR",sans-serif;background:#0f172a;border:2px solid #334155;border-radius:.8rem;color:white;text-align:center;outline:none;letter-spacing:.4em;}
 #pw-inp:focus{border-color:#4ade80;}
 .pw-row{display:grid;grid-template-columns:1fr 1fr;gap:.6rem;width:100%;}
-.pw-ok{padding:.7rem;font-size:1rem;font-weight:900;font-family:'Noto Sans KR',sans-serif;background:#16a34a;color:white;border:none;border-radius:.6rem;cursor:pointer;}
-.pw-cx{padding:.7rem;font-size:1rem;font-weight:700;font-family:'Noto Sans KR',sans-serif;background:#1e293b;color:#64748b;border:1px solid #334155;border-radius:.6rem;cursor:pointer;}
+.pw-ok{padding:.7rem;font-size:1rem;font-weight:900;font-family:"Noto Sans KR",sans-serif;background:#16a34a;color:white;border:none;border-radius:.6rem;cursor:pointer;}
+.pw-cx{padding:.7rem;font-size:1rem;font-weight:700;font-family:"Noto Sans KR",sans-serif;background:#1e293b;color:#64748b;border:1px solid #334155;border-radius:.6rem;cursor:pointer;}
 #pw-err{font-size:.8rem;color:#ef4444;min-height:.9rem;}
 #gm{background:#060e18;z-index:200;justify-content:flex-start;padding:0;overflow-y:auto;align-items:stretch;}
 .gmh{padding:1rem 1.5rem;background:#0a1628;border-bottom:1px solid #1e293b;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;}
@@ -37,44 +35,42 @@ body{font-family:'Noto Sans KR',sans-serif;background:#0a1628;color:white;overfl
 .gm-body{padding:1.2rem;display:flex;flex-direction:column;gap:1rem;}
 .sec{font-size:.7rem;font-weight:700;color:#475569;letter-spacing:.1em;text-transform:uppercase;border-bottom:1px solid #1e293b;padding-bottom:.4rem;}
 .stat-card{background:#1e293b;border-radius:.8rem;padding:.8rem;text-align:center;}
-.pvs-full{padding:1.2rem;font-size:1.1rem;font-weight:900;font-family:'Noto Sans KR',sans-serif;background:linear-gradient(135deg,#854d0e,#713f12);color:#fde68a;border:none;border-radius:.8rem;cursor:pointer;box-shadow:0 0 25px rgba(250,204,21,.35);width:100%;}
+.pvs-full{padding:1.2rem;font-size:1.1rem;font-weight:900;font-family:"Noto Sans KR",sans-serif;background:linear-gradient(135deg,#854d0e,#713f12);color:#fde68a;border:none;border-radius:.8rem;cursor:pointer;box-shadow:0 0 25px rgba(250,204,21,.35);width:100%;}
 .pvs-full:active{transform:scale(.96);}
 .act-row{display:grid;grid-template-columns:1fr 1fr;gap:.7rem;}
-.sm-btn{padding:.9rem;font-size:1rem;font-weight:900;font-family:'Noto Sans KR',sans-serif;border:none;border-radius:.8rem;cursor:pointer;}
+.sm-btn{padding:.9rem;font-size:1rem;font-weight:900;font-family:"Noto Sans KR",sans-serif;border:none;border-radius:.8rem;cursor:pointer;}
 .sm-btn:active{transform:scale(.97);}
-.gm-list{display:flex;flex-direction:column;gap:.3rem;max-height:200px;overflow-y:auto;}
+.gm-list{display:flex;flex-direction:column;gap:.3rem;max-height:180px;overflow-y:auto;}
 .gm-item{display:flex;align-items:center;gap:.5rem;padding:.35rem .7rem;background:#1e293b;border-radius:.5rem;font-size:.8rem;}
 #lobby{background:linear-gradient(160deg,#0a1628,#0d2040);}
 #game-canvas{position:fixed;inset:0;width:100%;height:100%;display:none;z-index:10;}
 #game-canvas.vis{display:block;}
-#dead-ov{position:fixed;inset:0;z-index:110;background:rgba(0,0,0,.87);display:none;flex-direction:column;align-items:center;justify-content:center;gap:1rem;font-family:'Noto Sans KR',sans-serif;color:white;}
+#dead-ov{position:fixed;inset:0;z-index:110;background:rgba(0,0,0,.87);display:none;flex-direction:column;align-items:center;justify-content:center;gap:1rem;font-family:"Noto Sans KR",sans-serif;color:white;}
 #dead-ov.vis{display:flex;}
-#lvlup{position:fixed;top:15%;left:50%;transform:translateX(-50%);z-index:120;background:rgba(250,204,21,.15);border:2px solid rgba(250,204,21,.5);border-radius:1rem;padding:.8rem 2rem;text-align:center;display:none;font-family:'Noto Sans KR',sans-serif;}
+#lvlup{position:fixed;top:15%;left:50%;transform:translateX(-50%);z-index:120;background:rgba(250,204,21,.15);border:2px solid rgba(250,204,21,.5);border-radius:1rem;padding:.8rem 2rem;text-align:center;display:none;font-family:"Noto Sans KR",sans-serif;}
 #lvlup.show{display:block;animation:lvA 2.2s ease forwards;}
 @keyframes lvA{0%{opacity:0;transform:translateX(-50%) scale(.8)}15%{opacity:1;transform:translateX(-50%) scale(1.1)}75%{opacity:1;transform:translateX(-50%) scale(1)}100%{opacity:0;transform:translateX(-50%) translateY(-30px)}}
 #pvs-flash{position:fixed;inset:0;z-index:130;pointer-events:none;display:none;}
-#pvs-flash.show{display:block;animation:pvsFlash 2s ease forwards;}
-@keyframes pvsFlash{0%{background:rgba(250,204,21,0)}20%{background:rgba(250,204,21,.25)}80%{background:rgba(250,204,21,.1)}100%{background:rgba(250,204,21,0)}}
+#pvs-flash.show{display:block;animation:pF 2s ease forwards;}
+@keyframes pF{0%{background:rgba(250,204,21,0)}20%{background:rgba(250,204,21,.3)}80%{background:rgba(250,204,21,.1)}100%{background:rgba(250,204,21,0)}}
 #end{background:radial-gradient(circle,#071a0a,#000);}
-.end-tit{font-size:2.5rem;font-weight:900;text-align:center;}
-.end-sub{font-size:1rem;color:rgba(255,255,255,.7);text-align:center;line-height:1.7;max-width:320px;}
-.end-verse{padding:1rem 1.5rem;border:1px solid rgba(74,222,128,.25);border-radius:1rem;background:rgba(74,222,128,.07);font-size:.9rem;color:#bbf7d0;text-align:center;line-height:1.6;max-width:320px;}
+.end-tit{font-size:2.3rem;font-weight:900;text-align:center;}
+.end-sub{font-size:.95rem;color:rgba(255,255,255,.7);text-align:center;line-height:1.7;max-width:300px;}
+.end-verse{padding:1rem 1.5rem;border:1px solid rgba(74,222,128,.25);border-radius:1rem;background:rgba(74,222,128,.07);font-size:.88rem;color:#bbf7d0;text-align:center;line-height:1.6;max-width:300px;}
 </style>
 </head>
 <body>
 <canvas id="game-canvas"></canvas>
-<!-- 입장 -->
 <div id="entry" class="screen">
   <div class="logo">성도의 견인</div>
   <div class="logo-sub">Perseverance of the Saints</div>
-  <input class="inp" id="name-inp" type="text" placeholder="이름(최대5자)" maxlength="5" autocomplete="off" autocorrect="off">
+  <input class="inp" id="name-inp" type="text" placeholder="이름 (최대5자)" maxlength="5" autocomplete="off" autocorrect="off">
   <button class="big-btn btn-green" id="join-btn">입장하기</button>
   <button id="gear">⚙</button>
 </div>
-<!-- 비번 -->
 <div id="pw-modal">
   <div class="pw-box">
-    <div class="pw-tit">⚙ GM 입장</div>
+    <div style="font-size:1rem;font-weight:700;color:#94a3b8;">⚙ GM 입장</div>
     <input id="pw-inp" type="password" placeholder="••••" maxlength="8" inputmode="numeric">
     <div id="pw-err"></div>
     <div class="pw-row">
@@ -83,7 +79,6 @@ body{font-family:'Noto Sans KR',sans-serif;background:#0a1628;color:white;overfl
     </div>
   </div>
 </div>
-<!-- GM -->
 <div id="gm" class="screen hidden">
   <div class="gmh">
     <div><div class="gmh-tit">⚙ GM 패널</div></div>
@@ -92,13 +87,13 @@ body{font-family:'Noto Sans KR',sans-serif;background:#0a1628;color:white;overfl
   <div class="gm-body">
     <div class="sec">현황</div>
     <div class="stat-card">
-      <div style="font-size:.75rem;color:#64748b;margin-bottom:.4rem;">접속 인원</div>
+      <div style="font-size:.75rem;color:#64748b;margin-bottom:.3rem;">접속 인원</div>
       <div style="font-size:2rem;font-weight:900;color:#4ade80;" id="gm-count">0명</div>
-      <div style="font-size:.75rem;color:#64748b;margin-top:.3rem;" id="gm-frontier">최전선: 출발점</div>
     </div>
     <div class="stat-card">
-      <div style="font-size:.75rem;color:#64748b;margin-bottom:.3rem;">타이머</div>
-      <div style="font-size:2rem;font-weight:900;color:#fbbf24;" id="gm-timer">8:00</div>
+      <div style="font-size:.75rem;color:#64748b;margin-bottom:.3rem;">타이머 / 성도</div>
+      <div style="font-size:1.8rem;font-weight:900;color:#fbbf24;" id="gm-timer">8:00</div>
+      <div style="font-size:.8rem;color:#64748b;margin-top:.3rem;" id="gm-saint-status">성도 대기중</div>
     </div>
     <div class="sec">✝ 성도의 견인</div>
     <button class="pvs-full" id="pvs-btn">⚡ 성도의 견인 발동!</button>
@@ -112,25 +107,24 @@ body{font-family:'Noto Sans KR',sans-serif;background:#0a1628;color:white;overfl
     <div class="gm-list" id="gm-list"></div>
   </div>
 </div>
-<!-- 대기실 -->
 <div id="lobby" class="screen hidden">
   <div style="font-size:3rem;">✝</div>
   <div style="font-size:2rem;font-weight:900;color:#4ade80;">성도의 견인</div>
-  <div style="font-size:.8rem;color:#334155;text-align:center;line-height:2;">왼쪽 드래그 → 이동<br>오른쪽 드래그 → 공격 방향<br>성도를 인도해 천국까지!</div>
+  <div style="font-size:.8rem;color:#334155;text-align:center;line-height:2.2;">
+    왼쪽 드래그 → 이동<br>
+    오른쪽 드래그 → 공격<br>
+    ✝ 성도를 인도해 천국까지!
+  </div>
   <div id="lobby-cnt" style="font-size:.8rem;color:#1e293b;"></div>
 </div>
-<!-- 사망 -->
 <div id="dead-ov">
   <div style="font-size:3.5rem;">☠</div>
   <div style="font-size:1.8rem;font-weight:900;color:#ef4444;">쓰러졌습니다</div>
-  <div style="font-size:.9rem;color:#94a3b8;text-align:center;">출발점으로 돌아갑니다</div>
+  <div style="font-size:.9rem;color:#94a3b8;">출발점으로 돌아갑니다</div>
   <div id="respawn-cnt" style="font-size:3rem;font-weight:900;color:#fbbf24;">5</div>
 </div>
-<!-- 레벨업 -->
 <div id="lvlup"><div style="font-size:1.1rem;font-weight:900;color:#facc15;" id="lvlup-txt">레벨 업!</div></div>
-<!-- 견인 플래시 -->
 <div id="pvs-flash"></div>
-<!-- 종료 -->
 <div id="end" class="screen hidden">
   <div id="end-tit" class="end-tit"></div>
   <div id="end-sub" class="end-sub"></div>
@@ -143,119 +137,155 @@ body{font-family:'Noto Sans KR',sans-serif;background:#0a1628;color:white;overfl
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
 import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-import { getFirestore,doc,setDoc,updateDoc,onSnapshot,collection,writeBatch,getDocs } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+import { getFirestore,doc,setDoc,updateDoc,onSnapshot,collection,writeBatch,getDocs,increment } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
 const FB=initializeApp({apiKey:"AIzaSyCfyjgtiDVD4Wsd9iGb9tEdrOGFYxxN2Tw",authDomain:"kingdomgenius.firebaseapp.com",projectId:"kingdomgenius",storageBucket:"kingdomgenius.firebasestorage.app",messagingSenderId:"385557748196",appId:"1:385557748196:web:457b999a38e4982f188ff1"});
 const auth=getAuth(FB),db=getFirestore(FB);
-const ROOT='kingdom_genius_games/pvs3_room';
-const STATE=doc(db,ROOT,'data/state');
-const PCOL=collection(db,ROOT,'players');
-const ECOL=collection(db,ROOT,'enemies');
-const PREF=uid=>doc(db,ROOT,'players',uid);
-const EREF=id=>doc(db,ROOT,'enemies',id);
+const ROOT="kingdom_genius_games/pvs3_room";
+const STATE=doc(db,ROOT,"data/state");
+const PCOL=collection(db,ROOT,"players");
+const ECOL=collection(db,ROOT,"enemies");
+const SCOL=collection(db,ROOT,"saints");
+const PREF=uid=>doc(db,ROOT,"players",uid);
+const EREF=id=>doc(db,ROOT,"enemies",id);
+const SREF=id=>doc(db,ROOT,"saints",id);
 
 // ── 월드 ──────────────────────────────────────────────
 const GW=5000,GH=700;
-const SPAWN={x:120,y:350};
-const HEAVEN={x:4880,y:350,r:70};
-const GAME_DURATION=480; // 8분
+const SPAWN={x:100,y:350};
+const HEAVEN={x:4900,y:350,r:70};
+const GAME_DURATION=480;
 const RESPAWN_MS=5000;
 const PVS_MS=20000;
 
-// 성도 경로 (벽 사이 갭을 통과하도록 설계)
+// 성도 경로 (벽 갭 통과하도록 정밀 설계)
 const SAINT_WP=[
-  {x:120,y:350},{x:580,y:340},{x:980,y:180},{x:1380,y:420},{x:1780,y:240},
-  {x:2180,y:380},{x:2580,y:280},{x:3020,y:350},{x:3430,y:350},{x:3820,y:350},
-  {x:4250,y:350},{x:4880,y:350}
+  {x:100,y:350},
+  {x:500,y:350},   // 갭1 통과 (y=280-420)
+  {x:850,y:220},   // 갭2 통과 (y=150-290)
+  {x:1150,y:350},  // 갭3 통과 (y=280-420)
+  {x:1500,y:480},  // 갭4 통과 (y=410-550)
+  {x:1850,y:350},  // 갭5 통과 (y=280-420)
+  {x:2200,y:220},  // 갭6 통과 (y=150-290)
+  {x:2600,y:350},  // 갭7 통과 (y=280-420)
+  {x:3000,y:350},
+  {x:3400,y:480},  // 갭8 통과 (y=410-550)
+  {x:3800,y:350},  // 갭9 통과 (y=280-420)
+  {x:4200,y:220},  // 갭10 통과 (y=150-290)
+  {x:4600,y:350},
+  {x:4900,y:350},
 ];
-const NUM_SAINTS=10;
-const SAINT_SPD=0.22; // 매우 느림 (px/frame @60fps)
+const NUM_SAINTS=8;
+const SAINT_SPD=0.42;  // 빠르게
 const SAINT_R=12;
+const SAINT_MAX_HP=120;
 
-// 적 타입 (세상의 시험들)
+// 벽 (갭이 성도 경로와 정확히 맞음)
+// 각 갭 위치: 성도 WP의 y±70px
+const WALLS=(()=>{
+  const w=[];
+  // 경계
+  w.push({x:0,y:0,w:GW,h:20},{x:0,y:680,w:GW,h:20},{x:0,y:0,w:20,h:GH},{x:4980,y:0,w:20,h:GH});
+
+  // 장벽 헬퍼: x위치, gapCenter, gapSize=140
+  function barrier(x,gapY,thick=38,gapH=140){
+    const g1=gapY-gapH/2,g2=gapY+gapH/2;
+    if(g1>20)         w.push({x,y:20,w:thick,h:g1-20});
+    if(g2<680)        w.push({x,y:g2,w:thick,h:680-g2});
+  }
+
+  // 장벽들 (순서대로)
+  barrier(460, 350);  // 갭1: y=350
+  barrier(700, 350);
+  barrier(960, 220);  // 갭2: y=220
+  barrier(1160,350);  // 갭3: y=350 (기둥형)
+  w.push({x:1160,y:190,w:38,h:110}); // 위 막기
+  // 실제 갭3은 300-420
+  barrier(1420,480);  // 갭4: y=480
+  barrier(1650,350);  // 갭5: y=350
+  barrier(1900,350);
+  barrier(2150,220);  // 갭6: y=220
+  barrier(2380,350);
+  barrier(2620,350);  // 갭7: y=350
+  barrier(2860,350);
+  // 기둥들
+  w.push({x:3050,y:180,w:36,h:36});
+  w.push({x:3050,y:484,w:36,h:36});
+  w.push({x:3260,y:280,w:36,h:36});
+  w.push({x:3260,y:384,w:36,h:36});
+  barrier(3430,480);  // 갭8: y=480
+  barrier(3670,350);  // 갭9: y=350
+  barrier(3900,350);
+  barrier(4140,220);  // 갭10: y=220
+  barrier(4380,350);
+  barrier(4620,350);
+  // 최후 관문 (견인 없이 통과 불가)
+  w.push({x:4750,y:20,w:50,h:260});   // y:20~280
+  w.push({x:4750,y:420,w:50,h:260});  // y:420~680
+  // 갭: y=280-420 (견인 시 수문장 제거로 통과 가능)
+  return w;
+})();
+
+// 적 타입
 const ETYPES={
-  yuhok: {name:'유혹',hp:60, dmg:12,spd:2.2,r:13,xp:5,  col:'#f59e0b',icon:'💸'},
-  uisim: {name:'의심',hp:120,dmg:20,spd:1.8,r:16,xp:10, col:'#6366f1',icon:'🌀'},
-  gyoman:{name:'교만',hp:280,dmg:35,spd:1.5,r:20,xp:20, col:'#7c3aed',icon:'👑'},
-  duryum:{name:'두려움',hp:90,dmg:40,spd:2.6,r:14,xp:12,col:'#dc2626',icon:'😱'},
-  hibak: {name:'핍박',hp:180,dmg:25,spd:2.0,r:17,xp:15, col:'#b45309',icon:'⚔️'},
-  sesang:{name:'세상',hp:400,dmg:50,spd:1.3,r:23,xp:30, col:'#0891b2',icon:'🌍'},
-  guardian:{name:'수문장',hp:999999,dmg:80,spd:1.0,r:28,xp:0,col:'#7f1d1d',icon:'☠️'},
+  yuhok: {name:"유혹",  hp:70, dmg:10,spd:2.0,r:13,xp:5, col:"#f59e0b",icon:"💸",shotSpd:4.0,shotRng:160,shotCd:2200},
+  uisim: {name:"의심",  hp:130,dmg:18,spd:1.7,r:16,xp:10,col:"#6366f1",icon:"🌀",shotSpd:3.5,shotRng:180,shotCd:2000},
+  gyoman:{name:"교만",  hp:300,dmg:30,spd:1.4,r:20,xp:20,col:"#7c3aed",icon:"👑",shotSpd:3.0,shotRng:200,shotCd:1800},
+  duryum:{name:"두려움",hp:100,dmg:38,spd:2.4,r:14,xp:12,col:"#dc2626",icon:"😱",shotSpd:5.0,shotRng:150,shotCd:1600},
+  hibak: {name:"핍박",  hp:200,dmg:22,spd:1.9,r:17,xp:15,col:"#b45309",icon:"⚔",shotSpd:4.0,shotRng:170,shotCd:1900},
+  sesang:{name:"세상",  hp:450,dmg:45,spd:1.2,r:23,xp:30,col:"#0891b2",icon:"🌍",shotSpd:3.0,shotRng:220,shotCd:2500},
+  guardian:{name:"수문장",hp:999999,dmg:70,spd:1.0,r:28,xp:0,col:"#7f1d1d",icon:"☠",shotSpd:4.0,shotRng:250,shotCd:1200},
 };
 
-// 웨이브 [시작 시간(초), [{type,x,y},...]]
+// 웨이브 (더 자주, 25~40초 간격)
 const WAVES=[
-  [8,  [{t:'yuhok',x:900,y:80},{t:'yuhok',x:900,y:620},{t:'yuhok',x:1200,y:150},{t:'yuhok',x:1200,y:550}]],
-  [50, [{t:'yuhok',x:1500,y:80},{t:'uisim',x:1300,y:350},{t:'yuhok',x:1500,y:620},{t:'uisim',x:1600,y:350}]],
-  [110,[{t:'uisim',x:1900,y:100},{t:'gyoman',x:2000,y:350},{t:'uisim',x:1900,y:600},{t:'hibak',x:2200,y:200},{t:'hibak',x:2200,y:500}]],
-  [180,[{t:'gyoman',x:2500,y:150},{t:'duryum',x:2600,y:350},{t:'gyoman',x:2500,y:550},{t:'hibak',x:2700,y:100},{t:'hibak',x:2700,y:600}]],
-  [260,[{t:'duryum',x:3000,y:80},{t:'sesang',x:3100,y:350},{t:'duryum',x:3000,y:620},{t:'gyoman',x:3200,y:200},{t:'gyoman',x:3200,y:500}]],
-  [350,[{t:'sesang',x:3500,y:150},{t:'sesang',x:3500,y:550},{t:'duryum',x:3600,y:350},{t:'gyoman',x:3700,y:100},{t:'gyoman',x:3700,y:600}]],
-  [430,[{t:'guardian',x:4600,y:200},{t:'guardian',x:4600,y:500},{t:'guardian',x:4750,y:350},{t:'guardian',x:4650,y:350}]],
+  [6,  [{t:"yuhok",x:800,y:100},{t:"yuhok",x:800,y:600},{t:"yuhok",x:1000,y:300}]],
+  [30, [{t:"yuhok",x:1100,y:80},{t:"uisim",x:1200,y:350},{t:"yuhok",x:1100,y:620}]],
+  [58, [{t:"uisim",x:1600,y:100},{t:"uisim",x:1600,y:600},{t:"gyoman",x:1700,y:350}]],
+  [88, [{t:"gyoman",x:2000,y:200},{t:"duryum",x:2100,y:350},{t:"gyoman",x:2000,y:500}]],
+  [118,[{t:"duryum",x:2400,y:80},{t:"hibak",x:2500,y:350},{t:"duryum",x:2400,y:620},{t:"uisim",x:2300,y:200}]],
+  [148,[{t:"hibak",x:2800,y:150},{t:"hibak",x:2800,y:550},{t:"gyoman",x:2900,y:350},{t:"duryum",x:2700,y:350}]],
+  [180,[{t:"sesang",x:3200,y:200},{t:"sesang",x:3200,y:500},{t:"hibak",x:3100,y:350}]],
+  [215,[{t:"sesang",x:3500,y:100},{t:"gyoman",x:3600,y:350},{t:"sesang",x:3500,y:600},{t:"duryum",x:3400,y:350}]],
+  [250,[{t:"sesang",x:3800,y:200},{t:"sesang",x:3800,y:500},{t:"gyoman",x:3900,y:100},{t:"gyoman",x:3900,y:600}]],
+  [290,[{t:"sesang",x:4100,y:300},{t:"sesang",x:4100,y:400},{t:"hibak",x:4000,y:200},{t:"hibak",x:4000,y:500}]],
+  [330,[{t:"guardian",x:4820,y:200},{t:"guardian",x:4820,y:350},{t:"guardian",x:4820,y:500}]],
 ];
 
-// 레벨
 const LEVELS=[
-  {xp:0,  atk:30,spd:3.8,maxHp:100,r:16},
-  {xp:40, atk:48,spd:4.1,maxHp:135,r:17},
-  {xp:100,atk:72,spd:4.4,maxHp:175,r:18},
-  {xp:200,atk:105,spd:4.7,maxHp:220,r:19},
-  {xp:340,atk:145,spd:5.0,maxHp:270,r:20},
-];
-
-// 벽 (충돌 실제 적용됨)
-const WALLS=[
-  // 경계
-  {x:0,y:0,w:GW,h:22},{x:0,y:678,w:GW,h:22},{x:0,y:0,w:22,h:GH},{x:4978,y:0,w:22,h:GH},
-  // 섹션 1 - 유혹의 길 (갭: y=240-440 중앙)
-  {x:580,y:22,w:38,h:218},{x:580,y:440,w:38,h:238},
-  {x:840,y:22,w:38,h:120},{x:840,y:320,w:38,h:358},
-  // 섹션 2 - 의심의 미로 (갭: 교차)
-  {x:1100,y:22,w:38,h:280},{x:1100,y:480,w:38,h:198},// 갭 280-480
-  {x:1360,y:22,w:38,h:120},{x:1360,y:340,w:38,h:338},// 갭 120-340
-  {x:1620,y:180,w:38,h:340},{x:1620,y:600,w:38,h:78}, // 갭 0-180, 520-600
-  {x:1880,y:22,w:38,h:240},{x:1880,y:430,w:38,h:248}, // 갭 240-430
-  // 섹션 3 - 교만의 광야 (기둥)
-  {x:2140,y:22,w:38,h:160},{x:2140,y:430,w:38,h:248}, // 갭 160-430
-  {x:2420,y:130,w:40,h:40},{x:2420,y:530,w:40,h:40},
-  {x:2680,y:200,w:40,h:40},{x:2680,y:350,w:40,h:40},{x:2680,y:500,w:40,h:40},
-  {x:2940,y:130,w:40,h:40},{x:2940,y:530,w:40,h:40},
-  // 섹션 4 - 핍박의 좁은 길
-  {x:3200,y:22,w:38,h:220},{x:3200,y:460,w:38,h:218},// 갭 220-460
-  {x:3460,y:22,w:38,h:100},{x:3460,y:300,w:38,h:378},// 갭 100-300
-  {x:3720,y:220,w:38,h:460},                          // 갭 0-220, 위쪽만
-  {x:3980,y:22,w:38,h:340},{x:3980,y:500,w:38,h:178},// 갭 340-500
-  // 섹션 5 - 최후의 관문
-  {x:4240,y:150,w:38,h:400},                          // 갭 0-150, 550-700
-  {x:4500,y:22,w:38,h:140},{x:4500,y:400,w:38,h:278},// 갭 140-400
+  {xp:0,  atk:32,spd:4.0,maxHp:100,r:16},
+  {xp:40, atk:50,spd:4.3,maxHp:135,r:17},
+  {xp:100,atk:75,spd:4.6,maxHp:175,r:18},
+  {xp:200,atk:108,spd:4.9,maxHp:220,r:19},
+  {xp:340,atk:150,spd:5.2,maxHp:270,r:20},
 ];
 
 // ── 상태 ─────────────────────────────────────────────
-let myUid=null,myName='',isGM=false,listenersSetup=false;
+let myUid=null,myName="",isGM=false,listenersSetup=false;
 let gameActive=false,alive=true,dying=false;
 let myX=SPAWN.x,myY=SPAWN.y,myHp=100,myMaxHp=100,myXp=0,myLevel=0,myKills=0;
 let pvsActive=false,pvsEnd=0;
 let gameStartTime=0;
-let allPlayers={},enemyHPs={};
+let allPlayers={},enemyHPs={},saintHPs={};
 let localEnemies=[],processedWaves=new Set();
+let localBullets=[]; // {x,y,dx,dy,dist,maxDist,dmg,targetType,ownerId,col}
 let loopId=null,syncId=null,lastFire=0;
-let frontier=SPAWN.x; // 전체 플레이어 중 최대 X
-let heavenReached=false;
+let frontier=SPAWN.x,heavenReached=false;
 let particles=[];
 const STARS=Array.from({length:200},()=>({x:Math.random()*GW,y:Math.random()*GH,r:Math.random()*1.2+.3,a:Math.random()*.25+.05}));
 
 // ── 캔버스/카메라 ─────────────────────────────────────
-const canvas=document.getElementById('game-canvas');
-const ctx=canvas.getContext('2d');
+const canvas=document.getElementById("game-canvas");
+const ctx=canvas.getContext("2d");
 let W,H,camX=0,camY=0;
 function resize(){W=canvas.width=window.innerWidth;H=canvas.height=window.innerHeight;}
-window.addEventListener('resize',resize);resize();
+window.addEventListener("resize",resize);resize();
 function updateCam(){camX=Math.max(0,Math.min(GW-W,myX-W/2));camY=Math.max(0,Math.min(GH-H,myY-H/2));}
 function ws(wx,wy){return{x:wx-camX,y:wy-camY};}
 
 // ── 벽 충돌 ──────────────────────────────────────────
 function collidesWall(x,y,r){
-  const pr=r-3; // 약간 여유
+  const pr=r-2;
   for(const w of WALLS){
     const cx=Math.max(w.x,Math.min(x,w.x+w.w));
     const cy=Math.max(w.y,Math.min(y,w.y+w.h));
@@ -263,7 +293,7 @@ function collidesWall(x,y,r){
   }
   return false;
 }
-function moveWithSlide(ox,oy,dx,dy,r){
+function moveSlide(ox,oy,dx,dy,r){
   const nx=ox+dx,ny=oy+dy;
   if(!collidesWall(nx,ny,r))return{x:nx,y:ny};
   if(!collidesWall(nx,oy,r))return{x:nx,y:oy};
@@ -272,7 +302,7 @@ function moveWithSlide(ox,oy,dx,dy,r){
 }
 
 // ── 조이스틱 ─────────────────────────────────────────
-const JOY_R=55;
+const JR=55;
 let jL={id:-1,bx:0,by:0,cx:0,cy:0,active:false};
 let jR={id:-1,bx:0,by:0,cx:0,cy:0,active:false};
 let lx=0,ly=0,rx=0,ry=0;
@@ -281,75 +311,79 @@ function jMv(j,t){
   if(t.identifier!==j.id)return;
   j.cx=t.clientX;j.cy=t.clientY;
   let dx=j.cx-j.bx,dy=j.cy-j.by,d=Math.hypot(dx,dy);
-  if(d>JOY_R){dx=dx/d*JOY_R;dy=dy/d*JOY_R;}
-  if(j===jL){lx=dx/JOY_R;ly=dy/JOY_R;}else{rx=dx/JOY_R;ry=dy/JOY_R;}
+  if(d>JR){dx=dx/d*JR;dy=dy/d*JR;}
+  if(j===jL){lx=dx/JR;ly=dy/JR;}else{rx=dx/JR;ry=dy/JR;}
 }
-function jEn(j,t){
-  if(t.identifier!==j.id)return;
-  j.active=false;j.id=-1;
-  if(j===jL){lx=0;ly=0;}else{rx=0;ry=0;}
-}
-document.addEventListener('touchstart',e=>{
-  if(!canvas.classList.contains('vis'))return;
-  e.preventDefault();
-  for(const t of e.changedTouches){if(t.clientX<W/2&&!jL.active)jSt(jL,t);else if(t.clientX>=W/2&&!jR.active)jSt(jR,t);}
-},{passive:false});
-document.addEventListener('touchmove',e=>{
-  if(!canvas.classList.contains('vis'))return;
-  e.preventDefault();
-  for(const t of e.changedTouches){jMv(jL,t);jMv(jR,t);}
-},{passive:false});
-document.addEventListener('touchend',e=>{
-  if(!canvas.classList.contains('vis'))return;
-  e.preventDefault();
-  for(const t of e.changedTouches){jEn(jL,t);jEn(jR,t);}
-},{passive:false});
+function jEn(j,t){if(t.identifier!==j.id)return;j.active=false;j.id=-1;if(j===jL){lx=0;ly=0;}else{rx=0;ry=0;}}
+document.addEventListener("touchstart",e=>{if(!canvas.classList.contains("vis"))return;e.preventDefault();for(const t of e.changedTouches){if(t.clientX<W/2&&!jL.active)jSt(jL,t);else if(t.clientX>=W/2&&!jR.active)jSt(jR,t);}},{passive:false});
+document.addEventListener("touchmove",e=>{if(!canvas.classList.contains("vis"))return;e.preventDefault();for(const t of e.changedTouches){jMv(jL,t);jMv(jR,t);}},{passive:false});
+document.addEventListener("touchend",e=>{if(!canvas.classList.contains("vis"))return;e.preventDefault();for(const t of e.changedTouches){jEn(jL,t);jEn(jR,t);}},{passive:false});
 
-// ── 성도 위치 (결정론적) ─────────────────────────────
+// ── 성도 위치 (결정론적, 경로 따라 정확히) ──────────
 function getSaintPos(idx,elapsedMs){
   const wps=SAINT_WP;
-  let totalLen=0;const segLens=[];
-  for(let i=1;i<wps.length;i++){const dl=Math.hypot(wps[i].x-wps[i-1].x,wps[i].y-wps[i-1].y);segLens.push(dl);totalLen+=dl;}
-  const offset=idx*2500; // 성도들 간 2.5초 간격
-  const elapsedSec=Math.max(0,(elapsedMs-offset)/1000);
-  const rawDist=elapsedSec*SAINT_SPD*60;
-  // 프론티어 제한: 성도가 있을 수 있는 최대 x
-  const maxX=heavenReached?HEAVEN.x:frontier;
-  // path를 따라 이동하되 maxX 초과 불가
-  let rem=rawDist,px=wps[0].x,py=wps[0].y;
-  for(let i=0;i<segLens.length;i++){
-    const nextX=wps[i+1].x;
-    if(nextX>maxX){
-      // 이 세그먼트 안에서 maxX까지만
-      const t=Math.min(1,(maxX-wps[i].x)/(wps[i+1].x-wps[i].x+0.001));
-      const segUsed=Math.min(rem,segLens[i]*t);
-      const tt=segUsed/segLens[i];
-      px=wps[i].x+(wps[i+1].x-wps[i].x)*tt;
-      py=wps[i].y+(wps[i+1].y-wps[i].y)*tt;
-      return{x:px,y:py,reached:false};
-    }
-    if(rem<=segLens[i]){
-      const tt=rem/segLens[i];
-      return{x:wps[i].x+(wps[i+1].x-wps[i].x)*tt,y:wps[i].y+(wps[i+1].y-wps[i].y)*tt,reached:false};
-    }
-    px=wps[i+1].x;py=wps[i+1].y;rem-=segLens[i];
+  const sId="s"+idx;
+  const hp=saintHPs[sId]??SAINT_MAX_HP;
+  // 사망한 성도
+  if(hp<=0)return{x:wps[0].x,y:wps[0].y,hp:0,dead:true,reached:false};
+
+  // 전체 경로 길이
+  let totalLen=0;
+  const segLens=[];
+  for(let i=1;i<wps.length;i++){
+    const dl=Math.hypot(wps[i].x-wps[i-1].x,wps[i].y-wps[i-1].y);
+    segLens.push(dl);totalLen+=dl;
   }
-  return{x:HEAVEN.x,y:HEAVEN.y,reached:true};
+  // 각 성도마다 3초 간격으로 출발
+  const offset=idx*3000;
+  const elapsed=Math.max(0,elapsedMs-offset);
+  const maxX=heavenReached?HEAVEN.x:frontier;
+  const rawDist=elapsed/1000*SAINT_SPD*60;
+
+  // 경로 따라 이동 (frontier 제한)
+  let rem=rawDist;
+  for(let i=0;i<segLens.length;i++){
+    const wpNextX=wps[i+1].x;
+    if(rem<=segLens[i]){
+      const t=rem/segLens[i];
+      const px=wps[i].x+(wps[i+1].x-wps[i].x)*t;
+      const py=wps[i].y+(wps[i+1].y-wps[i].y)*t;
+      // frontier 제한
+      if(px>maxX){
+        // 현재 세그먼트에서 maxX까지
+        const tMax=(maxX-wps[i].x)/(wps[i+1].x-wps[i].x+0.001);
+        const clampedT=Math.max(0,Math.min(t,tMax));
+        return{
+          x:wps[i].x+(wps[i+1].x-wps[i].x)*clampedT,
+          y:wps[i].y+(wps[i+1].y-wps[i].y)*clampedT,
+          hp,dead:false,reached:false
+        };
+      }
+      return{x:px,y:py,hp,dead:false,reached:false};
+    }
+    // 다음 세그먼트로
+    if(wps[i+1].x>maxX){
+      // 이 세그먼트 끝이 frontier 초과
+      const tMax=(maxX-wps[i].x)/(wps[i+1].x-wps[i].x+0.001);
+      const clampedT=Math.max(0,Math.min(1,tMax));
+      return{
+        x:wps[i].x+(wps[i+1].x-wps[i].x)*clampedT,
+        y:wps[i].y+(wps[i+1].y-wps[i].y)*clampedT,
+        hp,dead:false,reached:false
+      };
+    }
+    rem-=segLens[i];
+  }
+  return{x:HEAVEN.x,y:HEAVEN.y,hp,dead:false,reached:true};
 }
+
 function getActiveSaints(){
   if(gameStartTime===0)return[];
   const elapsed=Date.now()-gameStartTime;
-  return Array.from({length:NUM_SAINTS},(_,i)=>({idx:i,...getSaintPos(i,elapsed)}));
+  return Array.from({length:NUM_SAINTS},(_,i)=>({idx:i,...getSaintPos(i,elapsed),"id":"s"+i}));
 }
 
-// ── 프론티어 계산 ─────────────────────────────────────
-function computeFrontier(){
-  let maxX=myX;
-  Object.values(allPlayers).forEach(p=>{if((p.x||0)>maxX)maxX=p.x;});
-  return maxX;
-}
-
-// ── 적 웨이브 ─────────────────────────────────────────
+// ── 웨이브 처리 ───────────────────────────────────────
 function processWaves(){
   if(gameStartTime===0)return;
   const elapsed=(Date.now()-gameStartTime)/1000;
@@ -357,82 +391,128 @@ function processWaves(){
     if(elapsed>=t&&!processedWaves.has(wi)){
       processedWaves.add(wi);
       list.forEach((e,ei)=>{
-        const id=`w${wi}e${ei}`;
+        const id="w"+wi+"e"+ei;
         if(!localEnemies.find(le=>le.id===id)){
           const et=ETYPES[e.t];
           const hp=enemyHPs[id]??et.hp;
-          localEnemies.push({id,type:e.t,x:e.x,y:e.y,hp,maxHp:et.hp,lastAtk:0,lastSaintAtk:0});
-          if(enemyHPs[id]===undefined)setDoc(EREF(id),{hp:et.hp,dead:false},{merge:true}).catch(()=>{});
+          localEnemies.push({id,type:e.t,x:e.x,y:e.y,hp,maxHp:et.hp,lastAtk:0,lastShot:0});
+          if(enemyHPs[id]===undefined)
+            setDoc(EREF(id),{hp:et.hp,dead:false},{merge:true}).catch(()=>{});
         }
       });
     }
   });
-  localEnemies.forEach(e=>{const fbHp=enemyHPs[e.id];if(fbHp!==undefined)e.hp=fbHp;});
+  // Firebase HP 동기화
+  localEnemies.forEach(e=>{const h=enemyHPs[e.id];if(h!==undefined)e.hp=h;});
   localEnemies=localEnemies.filter(e=>e.hp>0);
 }
 
+// ── 적 AI + 총알 ─────────────────────────────────────
 function updateEnemies(saints){
   const now=Date.now();
   localEnemies.forEach(e=>{
     const et=ETYPES[e.type];
-    // 타겟: 가장 가까운 성도 or 플레이어
-    let tx=e.x,ty=e.y,nearD=Infinity;
-    saints.filter(s=>!s.reached).forEach(s=>{
-      const d=Math.hypot(s.x-e.x,s.y-e.y);if(d<nearD){nearD=d;tx=s.x;ty=s.y;}
+
+    // 타겟 계산: 성도 우선, 150px 이내 플레이어 있으면 플레이어
+    let tx=e.x,ty=e.y,nearSD=Infinity,nearPD=Infinity,targetIsSaint=true;
+    saints.filter(s=>!s.dead&&!s.reached).forEach(s=>{
+      const d=Math.hypot(s.x-e.x,s.y-e.y);if(d<nearSD){nearSD=d;tx=s.x;ty=s.y;}
     });
-    // 플레이어가 더 가까우면 우선
-    let nearP=null,nearPD=9999;
     Object.values(allPlayers).filter(p=>p.alive).forEach(p=>{
-      const d=Math.hypot(p.x-e.x,p.y-e.y);if(d<nearPD){nearPD=d;nearP=p;}
+      const d=Math.hypot(p.x-e.x,p.y-e.y);
+      if(d<nearPD&&d<150){nearPD=d;tx=p.x;ty=p.y;targetIsSaint=false;}
     });
-    if(nearP&&nearPD<nearD*0.6&&nearPD<250){tx=nearP.x;ty=nearP.y;nearD=nearPD;}
+
+    // 이동 (벽 통과)
     const dd=Math.hypot(tx-e.x,ty-e.y);
-    if(dd>et.r+12){
-      const mv=moveWithSlide(e.x,e.y,(tx-e.x)/dd*et.spd,(ty-e.y)/dd*et.spd,et.r);
+    if(dd>et.r+10){
+      const mv=moveSlide(e.x,e.y,(tx-e.x)/dd*et.spd,(ty-e.y)/dd*et.spd,et.r);
       e.x=mv.x;e.y=mv.y;
     }
-    // 플레이어 공격
-    if(nearP&&nearP.uid===myUid&&nearPD<et.r+LEVELS[myLevel].r+8&&now-e.lastAtk>1600){
+
+    // 총 발사 (주기적으로)
+    if(now-e.lastShot>et.shotCd&&dd<et.shotRng+80){
+      e.lastShot=now;
+      const ndx=(tx-e.x)/(dd||1),ndy=(ty-e.y)/(dd||1);
+      localBullets.push({
+        x:e.x,y:e.y,dx:ndx*et.shotSpd,dy:ndy*et.shotSpd,
+        dist:0,maxDist:et.shotRng,dmg:et.dmg,
+        fromEnemy:true,eid:e.id,etype:e.type,
+        col:et.col.replace("#",""),
+      });
+    }
+
+    // 근접 성도 공격 (데미지)
+    if(targetIsSaint&&nearSD<et.r+SAINT_R+8&&now-e.lastAtk>2000){
       e.lastAtk=now;
-      if(pvsActive){return;} // 견인 활성 시 무적
-      myHp=Math.max(0,myHp-et.dmg);
-      updateDoc(PREF(myUid),{hp:myHp}).catch(()=>{});
-      particles.push({x:myX,y:myY,vx:(Math.random()-.5)*4,vy:-2,r:7,life:1,col:'239,68,68'});
-      if(myHp<=0&&!dying)die();
+      const nearSaint=saints.find(s=>!s.dead&&!s.reached&&Math.hypot(s.x-e.x,s.y-e.y)===nearSD);
+      if(nearSaint){
+        const cur=saintHPs[nearSaint.id]??SAINT_MAX_HP;
+        const nh=Math.max(0,cur-et.dmg);
+        saintHPs[nearSaint.id]=nh;
+        setDoc(SREF(nearSaint.id),{hp:nh},{merge:true}).catch(()=>{});
+        particles.push({x:nearSaint.x,y:nearSaint.y,vx:(Math.random()-.5)*3,vy:-2,r:5,life:1,col:"255,255,255"});
+      }
     }
   });
 }
 
-// ── 발사 ─────────────────────────────────────────────
-async function fire(){
+// ── 총알 업데이트 ─────────────────────────────────────
+function updateBullets(saints){
+  const now=Date.now();
+  localBullets=localBullets.filter(b=>b.dist<b.maxDist);
+  localBullets.forEach(b=>{
+    b.x+=b.dx;b.y+=b.dy;b.dist+=Math.hypot(b.dx,b.dy);
+    // 벽 충돌 → 제거
+    if(collidesWall(b.x,b.y,3)){b.dist=b.maxDist;return;}
+
+    if(b.fromEnemy){
+      // 내 캐릭터 피격
+      if(Math.hypot(b.x-myX,b.y-myY)<LEVELS[myLevel].r+5&&alive){
+        b.dist=b.maxDist;
+        if(pvsActive)return;
+        myHp=Math.max(0,myHp-b.dmg);
+        updateDoc(PREF(myUid),{hp:myHp}).catch(()=>{});
+        particles.push({x:myX,y:myY,vx:(Math.random()-.5)*4,vy:-2,r:7,life:1,col:"239,68,68"});
+        if(myHp<=0&&!dying)die();
+      }
+    } else {
+      // 플레이어 총알 → 적 피격
+      for(const e of localEnemies){
+        if(e.id===b.eid)continue; // 자기 자신 제외 (혹시 있다면)
+        if(Math.hypot(b.x-e.x,b.y-e.y)<ETYPES[e.type].r+3){
+          b.dist=b.maxDist;
+          const nh=Math.max(0,e.hp-b.dmg);e.hp=nh;
+          updateDoc(EREF(e.id),{hp:nh,dead:nh<=0}).catch(()=>{});
+          if(nh<=0){myXp+=ETYPES[e.type].xp;myKills++;checkLvl();updateDoc(PREF(myUid),{xp:myXp,kills:myKills}).catch(()=>{});}
+          particles.push({x:e.x,y:e.y,vx:(Math.random()-.5)*3,vy:-1.5,r:5,life:1,col:"250,204,21"});
+          break;
+        }
+      }
+    }
+  });
+}
+
+// ── 플레이어 발사 ─────────────────────────────────────
+function playerFire(){
   const len=Math.hypot(rx,ry);if(len<.08)return;
   const ndx=rx/len,ndy=ry/len;
-  const rng=200+myLevel*30;
-  let nearest=null,nearD=rng;
-  localEnemies.forEach(e=>{
-    const ex=e.x-myX,ey=e.y-myY;
-    const proj=ex*ndx+ey*ndy;if(proj<0||proj>nearD)return;
-    const perp2=(ex-ndx*proj)**2+(ey-ndy*proj)**2;
-    if(perp2<(ETYPES[e.type].r*1.5)**2&&proj<nearD){nearest=e;nearD=proj;}
+  localBullets.push({
+    x:myX,y:myY,dx:ndx*7,dy:ndy*7,
+    dist:0,maxDist:250+myLevel*35,
+    dmg:LEVELS[myLevel].atk,
+    fromEnemy:false,eid:"player_"+myUid,
+    col:"4ade80",
   });
-  if(!nearest)return;
-  const atk=LEVELS[myLevel].atk;
-  const nh=Math.max(0,nearest.hp-atk);nearest.hp=nh;
-  const hx=myX+ndx*nearD,hy=myY+ndy*nearD;
-  particles.push({x:hx,y:hy,vx:(Math.random()-.5)*3,vy:-1.5,r:6,life:1,col:'250,204,21'});
-  try{
-    await updateDoc(EREF(nearest.id),{hp:nh,dead:nh<=0});
-    if(nh<=0){myXp+=ETYPES[nearest.type].xp;myKills++;checkLvl();updateDoc(PREF(myUid),{xp:myXp,kills:myKills}).catch(()=>{});}
-  }catch(_){}
 }
 
 function checkLvl(){
   let nl=0;for(let i=LEVELS.length-1;i>=0;i--){if(myXp>=LEVELS[i].xp){nl=i;break;}}
   if(nl>myLevel){
     myLevel=nl;const lv=LEVELS[myLevel];myMaxHp=lv.maxHp;myHp=Math.min(myHp+40,myMaxHp);
-    document.getElementById('lvlup-txt').textContent=`⬆ Lv.${myLevel+1}! 공격력 ${lv.atk}`;
-    document.getElementById('lvlup').classList.add('show');
-    setTimeout(()=>document.getElementById('lvlup').classList.remove('show'),2200);
+    document.getElementById("lvlup-txt").textContent="⬆ Lv."+( myLevel+1)+"! 공격력 "+lv.atk;
+    document.getElementById("lvlup").classList.add("show");
+    setTimeout(()=>document.getElementById("lvlup").classList.remove("show"),2200);
     updateDoc(PREF(myUid),{level:myLevel,maxHp:myMaxHp,hp:myHp}).catch(()=>{});
   }
 }
@@ -440,71 +520,58 @@ function checkLvl(){
 async function die(){
   if(!alive||dying)return;
   dying=true;alive=false;gameActive=false;
-  document.getElementById('dead-ov').classList.add('vis');
+  document.getElementById("dead-ov").classList.add("vis");
   await updateDoc(PREF(myUid),{alive:false,hp:myMaxHp,x:SPAWN.x,y:SPAWN.y});
   let cnt=Math.ceil(RESPAWN_MS/1000);
-  document.getElementById('respawn-cnt').textContent=cnt;
-  const iv=setInterval(()=>{cnt--;document.getElementById('respawn-cnt').textContent=Math.max(0,cnt);if(cnt<=0)clearInterval(iv);},1000);
+  document.getElementById("respawn-cnt").textContent=cnt;
+  const iv=setInterval(()=>{cnt--;document.getElementById("respawn-cnt").textContent=Math.max(0,cnt);if(cnt<=0)clearInterval(iv);},1000);
   setTimeout(async()=>{
     alive=true;gameActive=true;dying=false;
     myX=SPAWN.x+(Math.random()-.5)*40;myY=SPAWN.y+(Math.random()-.5)*40;myHp=myMaxHp;
-    document.getElementById('dead-ov').classList.remove('vis');
-    await updateDoc(PREF(myUid),{alive:true,x:myX,y:myY,hp:myMaxHp});
+    document.getElementById("dead-ov").classList.remove("vis");
+    await updateDoc(PREF(myUid),{alive:true,x:Math.round(myX),y:Math.round(myY),hp:myHp});
   },RESPAWN_MS);
 }
 
-// ── 렌더링 ────────────────────────────────────────────
+// ── 렌더 ─────────────────────────────────────────────
 let rafId=null;
 function render(ts){
-  if(!canvas.classList.contains('vis')){rafId=requestAnimationFrame(render);return;}
+  if(!canvas.classList.contains("vis")){rafId=requestAnimationFrame(render);return;}
   updateCam();
-  // 보간
-  Object.values(allPlayers).forEach(p=>{
-    if(p._rx===undefined){p._rx=p.x;p._ry=p.y;}
-    p._rx+=(p.x-p._rx)*.15;p._ry+=(p.y-p._ry)*.15;
-  });
-  ctx.fillStyle='#050d0a';ctx.fillRect(0,0,W,H);
+  Object.values(allPlayers).forEach(p=>{if(p._rx===undefined){p._rx=p.x;p._ry=p.y;}p._rx+=(p.x-p._rx)*.15;p._ry+=(p.y-p._ry)*.15;});
+  ctx.fillStyle="#050d0a";ctx.fillRect(0,0,W,H);
   // 별
-  STARS.forEach(s=>{
-    const p=ws(s.x,s.y);
-    if(p.x<-2||p.x>W+2||p.y<-2||p.y>H+2)return;
-    ctx.fillStyle=`rgba(255,255,255,${s.a})`;ctx.beginPath();ctx.arc(p.x,p.y,s.r,0,Math.PI*2);ctx.fill();
-  });
+  STARS.forEach(s=>{const p=ws(s.x,s.y);if(p.x<-2||p.x>W+2||p.y<-2||p.y>H+2)return;ctx.fillStyle=`rgba(255,255,255,${s.a})`;ctx.beginPath();ctx.arc(p.x,p.y,s.r,0,Math.PI*2);ctx.fill();});
   // 길
-  ctx.fillStyle='rgba(10,22,10,.88)';
-  const r1y=ws(0,180).y,r2y=ws(0,520).y;
-  ctx.fillRect(0,r1y,W,r2y-r1y);
+  const ry1=ws(0,160).y,ry2=ws(0,540).y;ctx.fillStyle="rgba(10,22,10,.88)";ctx.fillRect(0,ry1,W,ry2-ry1);
   // 벽
-  WALLS.forEach(w=>{
-    const p=ws(w.x,w.y);
-    if(p.x>W||p.y>H||p.x+w.w<0||p.y+w.h<0)return;
-    ctx.fillStyle='#14371e';ctx.fillRect(p.x,p.y,w.w,w.h);
-    ctx.strokeStyle='rgba(74,222,128,.18)';ctx.lineWidth=1;ctx.strokeRect(p.x,p.y,w.w,w.h);
-  });
+  WALLS.forEach(w=>{const p=ws(w.x,w.y);if(p.x>W||p.y>H||p.x+w.w<0||p.y+w.h<0)return;ctx.fillStyle="#14371e";ctx.fillRect(p.x,p.y,w.w,w.h);ctx.strokeStyle="rgba(74,222,128,.18)";ctx.lineWidth=1;ctx.strokeRect(p.x,p.y,w.w,w.h);});
   // 스폰
-  {const pp=ws(SPAWN.x-50,SPAWN.y-55);ctx.fillStyle='rgba(74,222,128,.07)';ctx.strokeStyle='rgba(74,222,128,.3)';ctx.lineWidth=2;ctx.fillRect(pp.x,pp.y,100,110);ctx.strokeRect(pp.x,pp.y,100,110);ctx.fillStyle='rgba(74,222,128,.4)';ctx.font='bold 10px Noto Sans KR';ctx.textAlign='center';ctx.fillText('출발',ws(SPAWN.x,SPAWN.y-62).x,ws(SPAWN.x,SPAWN.y-62).y);}
+  {const sp=ws(SPAWN.x-45,SPAWN.y-50);ctx.fillStyle="rgba(74,222,128,.07)";ctx.strokeStyle="rgba(74,222,128,.3)";ctx.lineWidth=2;ctx.fillRect(sp.x,sp.y,90,100);ctx.strokeRect(sp.x,sp.y,90,100);ctx.fillStyle="rgba(74,222,128,.4)";ctx.font="bold 10px Noto Sans KR";ctx.textAlign="center";const sl=ws(SPAWN.x,SPAWN.y-58);ctx.fillText("출발",sl.x,sl.y);}
   // 천국
   drawHeaven(ts);
   // 파티클
   particles=particles.filter(p=>p.life>0);
   particles.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.life-=.07;const pp=ws(p.x,p.y);ctx.fillStyle=`rgba(${p.col},${p.life})`;ctx.beginPath();ctx.arc(pp.x,pp.y,p.r*p.life+1,0,Math.PI*2);ctx.fill();});
-  // 프론티어 라인
-  if(gameStartTime>0&&!heavenReached){
-    const fx=ws(frontier,0).x;
-    if(fx>0&&fx<W){
-      ctx.strokeStyle='rgba(74,222,128,.15)';ctx.lineWidth=1;ctx.setLineDash([8,8]);
-      ctx.beginPath();ctx.moveTo(fx,0);ctx.lineTo(fx,H);ctx.stroke();ctx.setLineDash([]);
-    }
-  }
-  // 성도
+  // 총알
+  localBullets.forEach(b=>{
+    const p=ws(b.x,b.y);if(p.x<-10||p.x>W+10||p.y<-10||p.y>H+10)return;
+    const progress=1-b.dist/b.maxDist;
+    ctx.fillStyle=`rgba(${b.fromEnemy?"255,100,50":"74,222,128"},${Math.min(1,progress*2)})`;
+    ctx.shadowBlur=6;ctx.shadowColor=b.fromEnemy?"#ff6432":"#4ade80";
+    ctx.beginPath();ctx.arc(p.x,p.y,b.fromEnemy?4:3,0,Math.PI*2);ctx.fill();
+    ctx.shadowBlur=0;
+    // 꼬리
+    ctx.strokeStyle=`rgba(${b.fromEnemy?"255,100,50":"74,222,128"},${progress*.3})`;
+    ctx.lineWidth=1.5;ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.lineTo(p.x-b.dx*3,p.y-b.dy*3);ctx.stroke();
+  });
+  // 게임 요소
   if(gameStartTime>0){
     const saints=getActiveSaints();
     saints.forEach(s=>drawSaint(s,ts));
     localEnemies.forEach(e=>drawEnemy(e));
   }
-  // 다른 플레이어
   Object.values(allPlayers).filter(p=>p.uid!==myUid&&p.alive).forEach(p=>drawOtherPlayer(p));
-  // 내 캐릭
   if(alive)drawMe(ts);
   drawHUD(ts);drawJoys();
   rafId=requestAnimationFrame(render);
@@ -513,152 +580,146 @@ rafId=requestAnimationFrame(render);
 
 function drawHeaven(ts){
   const dist=Math.hypot(myX-HEAVEN.x,myY-HEAVEN.y);
-  const FULL=100,FADE=350;
+  const FULL=100,FADE=400;
   const v=dist<FULL?1:dist>FADE?0:1-(dist-FULL)/(FADE-FULL);
-  // 항상 최소한 방향 표시 (HUD에 화살표로)
-  const p=ws(HEAVEN.x,HEAVEN.y);
-  const hr=HEAVEN.r;
-  const pulse=.7+Math.sin(ts/500)*.3;
+  const p=ws(HEAVEN.x,HEAVEN.y);const hr=HEAVEN.r;const pulse=.7+Math.sin(ts/500)*.3;
   if(v>0){
     const g=ctx.createRadialGradient(p.x,p.y,0,p.x,p.y,hr*3.5);
-    g.addColorStop(0,`rgba(250,204,21,${.25*pulse*v})`);g.addColorStop(1,'rgba(250,204,21,0)');
+    g.addColorStop(0,`rgba(250,204,21,${.25*pulse*v})`);g.addColorStop(1,"rgba(250,204,21,0)");
     ctx.fillStyle=g;ctx.beginPath();ctx.arc(p.x,p.y,hr*3.5,0,Math.PI*2);ctx.fill();
     ctx.fillStyle=`rgba(250,204,21,${(.14+.04*pulse)*v})`;
     ctx.strokeStyle=`rgba(250,204,21,${.9*pulse*v})`;ctx.lineWidth=2.5;
-    ctx.shadowBlur=28*v;ctx.shadowColor='#facc15';
+    ctx.shadowBlur=28*v;ctx.shadowColor="#facc15";
     ctx.beginPath();ctx.arc(p.x,p.y,hr,0,Math.PI*2);ctx.fill();ctx.stroke();ctx.shadowBlur=0;
-    if(v>0.4){const tv=(v-.4)/.6;ctx.font=`bold ${hr*.85}px sans-serif`;ctx.fillStyle=`rgba(250,204,21,${pulse*tv})`;ctx.textAlign='center';ctx.textBaseline='middle';ctx.shadowBlur=8;ctx.shadowColor='#facc15';ctx.fillText('✝',p.x,p.y);ctx.shadowBlur=0;ctx.font='bold 12px Noto Sans KR';ctx.fillStyle=`rgba(250,204,21,${.8*pulse*tv})`;ctx.textBaseline='top';ctx.fillText('천 국',p.x,p.y+hr+5);}
+    if(v>0.4){const tv=(v-.4)/.6;
+      ctx.font=`bold ${hr*.85}px sans-serif`;ctx.fillStyle=`rgba(250,204,21,${pulse*tv})`;ctx.textAlign="center";ctx.textBaseline="middle";ctx.shadowBlur=8;ctx.shadowColor="#facc15";ctx.fillText("✝",p.x,p.y);ctx.shadowBlur=0;
+      ctx.font="bold 12px Noto Sans KR";ctx.fillStyle=`rgba(250,204,21,${.8*pulse*tv})`;ctx.textBaseline="top";ctx.fillText("천 국",p.x,p.y+hr+5);}
   }
 }
 
 function drawSaint(s,ts){
-  if(s.reached)return;
+  if(s.dead)return;if(s.reached)return;
   const p=ws(s.x,s.y);if(p.x<-30||p.x>W+30||p.y<-30||p.y>H+30)return;
-  const r=SAINT_R;
-  ctx.shadowBlur=pvsActive?22:8;ctx.shadowColor=pvsActive?'#facc15':'rgba(255,255,255,.5)';
-  ctx.fillStyle=pvsActive?'#fef08a':'rgba(255,255,255,.92)';ctx.beginPath();ctx.arc(p.x,p.y,r,0,Math.PI*2);ctx.fill();ctx.shadowBlur=0;
-  ctx.font=`bold ${r*.85}px sans-serif`;ctx.fillStyle='#0a1628';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText('✝',p.x,p.y);
+  const r=SAINT_R;const hpPct=(s.hp||0)/SAINT_MAX_HP;
+  ctx.shadowBlur=pvsActive?22:8;ctx.shadowColor=pvsActive?"#facc15":"rgba(255,255,255,.5)";
+  ctx.fillStyle=pvsActive?"#fef08a":"rgba(255,255,255,.92)";ctx.beginPath();ctx.arc(p.x,p.y,r,0,Math.PI*2);ctx.fill();ctx.shadowBlur=0;
+  ctx.font=`bold ${r*.85}px sans-serif`;ctx.fillStyle="#0a1628";ctx.textAlign="center";ctx.textBaseline="middle";ctx.fillText("✝",p.x,p.y);
+  // HP 바
+  const bw=r*2.5,bh=3,bx=p.x-bw/2,by=p.y-r-5;
+  ctx.fillStyle="#0f172a";ctx.fillRect(bx,by,bw,bh);
+  if(bw*hpPct>0){ctx.fillStyle=hpPct>.5?"#4ade80":hpPct>.25?"#fbbf24":"#ef4444";ctx.fillRect(bx,by,bw*hpPct,bh);}
 }
 
 function drawEnemy(e){
-  const p=ws(e.x,e.y);if(p.x<-50||p.x>W+50||p.y<-50||p.y>H+50)return;
+  const p=ws(e.x,e.y);if(p.x<-60||p.x>W+60||p.y<-60||p.y>H+60)return;
   const et=ETYPES[e.type];const r=et.r;const hpPct=e.hp/e.maxHp;
   ctx.shadowBlur=10;ctx.shadowColor=et.col;ctx.fillStyle=et.col;ctx.beginPath();ctx.arc(p.x,p.y,r,0,Math.PI*2);ctx.fill();ctx.shadowBlur=0;
-  ctx.font=`bold ${r*.85}px sans-serif`;ctx.fillStyle='white';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(et.icon,p.x,p.y);
-  // HP 바 (수문장 제외 — HP 표시 의미 없음)
-  if(e.type!=='guardian'){
+  ctx.font=`bold ${r*.85}px sans-serif`;ctx.fillStyle="white";ctx.textAlign="center";ctx.textBaseline="middle";ctx.fillText(et.icon,p.x,p.y);
+  if(e.type!=="guardian"){
     const bw=r*2.4,bh=3,bx=p.x-bw/2,by=p.y-r-5;
-    ctx.fillStyle='#0f172a';ctx.fillRect(bx,by,bw,bh);
+    ctx.fillStyle="#0f172a";ctx.fillRect(bx,by,bw,bh);
     if(bw*hpPct>0){ctx.fillStyle=et.col;ctx.fillRect(bx,by,bw*hpPct,bh);}
-  }
-  // 수문장: "???" 표시
-  if(e.type==='guardian'){
-    ctx.font='bold 9px Noto Sans KR';ctx.fillStyle='rgba(255,100,100,.9)';
-    ctx.textBaseline='top';ctx.fillText('???',p.x,p.y+r+4);
+    ctx.font="bold 8px Noto Sans KR";ctx.fillStyle="rgba(255,255,255,.5)";ctx.textBaseline="top";ctx.fillText(et.name,p.x,p.y+r+4);
   } else {
-    ctx.font='bold 9px Noto Sans KR';ctx.fillStyle='rgba(255,255,255,.5)';
-    ctx.textBaseline='top';ctx.fillText(et.name,p.x,p.y+r+4);
+    ctx.font="bold 9px Noto Sans KR";ctx.fillStyle="rgba(255,100,100,.9)";ctx.textBaseline="top";ctx.fillText("???",p.x,p.y+r+4);
   }
 }
 
 function drawOtherPlayer(p){
   const pp=ws(p._rx||p.x,p._ry||p.y);if(pp.x<-40||pp.x>W+40||pp.y<-40||pp.y>H+40)return;
-  const r=(LEVELS[p.level||0]?.r||16);
-  ctx.fillStyle='#4ade80';ctx.shadowBlur=8;ctx.shadowColor='#4ade80';
-  ctx.beginPath();ctx.arc(pp.x,pp.y,r,0,Math.PI*2);ctx.fill();ctx.shadowBlur=0;
-  ctx.font=`bold ${Math.max(7,r*.52)}px Noto Sans KR`;ctx.fillStyle='#0a1628';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText((p.name||'').slice(0,4),pp.x,pp.y);
-  const hp=Math.max(0,(p.hp||0)/(p.maxHp||100));
-  const bw=r*2.6,bh=4,bx=pp.x-bw/2,by=pp.y-r-6;
-  ctx.fillStyle='#1e293b';ctx.fillRect(bx,by,bw,bh);
-  if(bw*hp>0){ctx.fillStyle=hp>.5?'#4ade80':hp>.25?'#fbbf24':'#ef4444';ctx.fillRect(bx,by,bw*hp,bh);}
+  const r=LEVELS[p.level||0]?.r||16;
+  ctx.fillStyle="#4ade80";ctx.shadowBlur=8;ctx.shadowColor="#4ade80";ctx.beginPath();ctx.arc(pp.x,pp.y,r,0,Math.PI*2);ctx.fill();ctx.shadowBlur=0;
+  ctx.font=`bold ${Math.max(7,r*.52)}px Noto Sans KR`;ctx.fillStyle="#0a1628";ctx.textAlign="center";ctx.textBaseline="middle";ctx.fillText((p.name||"").slice(0,4),pp.x,pp.y);
+  const hp=Math.max(0,(p.hp||0)/(p.maxHp||100));const bw=r*2.6,bh=4,bx=pp.x-bw/2,by=pp.y-r-6;
+  ctx.fillStyle="#1e293b";ctx.fillRect(bx,by,bw,bh);if(bw*hp>0){ctx.fillStyle=hp>.5?"#4ade80":hp>.25?"#fbbf24":"#ef4444";ctx.fillRect(bx,by,bw*hp,bh);}
+  ctx.font="bold 8px Noto Sans KR";ctx.fillStyle="rgba(255,255,255,.45)";ctx.textBaseline="top";ctx.fillText("Lv"+((p.level||0)+1),pp.x,pp.y+r+4);
 }
 
 function drawMe(ts){
   const p=ws(myX,myY);const lv=LEVELS[myLevel];const r=lv.r;
-  if(pvsActive){const sp=.5+Math.sin(ts/130)*.5;ctx.strokeStyle=`rgba(250,204,21,${sp})`;ctx.lineWidth=3;ctx.shadowBlur=18;ctx.shadowColor='#facc15';ctx.beginPath();ctx.arc(p.x,p.y,r+12,0,Math.PI*2);ctx.stroke();ctx.shadowBlur=0;}
-  ctx.strokeStyle='rgba(255,255,255,.7)';ctx.lineWidth=2;ctx.setLineDash([4,3]);ctx.beginPath();ctx.arc(p.x,p.y,r+5,0,Math.PI*2);ctx.stroke();ctx.setLineDash([]);
-  ctx.fillStyle='#22d3ee';ctx.shadowBlur=18;ctx.shadowColor='#22d3ee';ctx.beginPath();ctx.arc(p.x,p.y,r,0,Math.PI*2);ctx.fill();ctx.shadowBlur=0;
-  ctx.font=`bold ${Math.max(8,r*.52)}px Noto Sans KR`;ctx.fillStyle='#0a1628';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(myName.slice(0,4),p.x,p.y);
+  if(pvsActive){const sp=.5+Math.sin(ts/130)*.5;ctx.strokeStyle=`rgba(250,204,21,${sp})`;ctx.lineWidth=3;ctx.shadowBlur=18;ctx.shadowColor="#facc15";ctx.beginPath();ctx.arc(p.x,p.y,r+12,0,Math.PI*2);ctx.stroke();ctx.shadowBlur=0;}
+  ctx.strokeStyle="rgba(255,255,255,.7)";ctx.lineWidth=2;ctx.setLineDash([4,3]);ctx.beginPath();ctx.arc(p.x,p.y,r+5,0,Math.PI*2);ctx.stroke();ctx.setLineDash([]);
+  ctx.fillStyle="#22d3ee";ctx.shadowBlur=18;ctx.shadowColor="#22d3ee";ctx.beginPath();ctx.arc(p.x,p.y,r,0,Math.PI*2);ctx.fill();ctx.shadowBlur=0;
+  ctx.font=`bold ${Math.max(8,r*.52)}px Noto Sans KR`;ctx.fillStyle="#0a1628";ctx.textAlign="center";ctx.textBaseline="middle";ctx.fillText(myName.slice(0,4),p.x,p.y);
   const hp=Math.max(0,myHp/myMaxHp);const bw=r*2.8,bh=5,bx=p.x-bw/2,by=p.y-r-8;
-  ctx.fillStyle='#1e293b';ctx.fillRect(bx,by,bw,bh);
-  if(bw*hp>0){ctx.fillStyle=hp>.5?'#4ade80':hp>.25?'#fbbf24':'#ef4444';ctx.shadowBlur=4;ctx.shadowColor='currentColor';ctx.fillRect(bx,by,bw*hp,bh);ctx.shadowBlur=0;}
-  ctx.font='bold 9px Noto Sans KR';ctx.fillStyle='rgba(255,255,255,.5)';ctx.textBaseline='top';ctx.fillText(`Lv.${myLevel+1}`,p.x,p.y+r+4);
-  // 조준선
-  if(Math.hypot(rx,ry)>.08){const len=Math.hypot(rx,ry),ndx=rx/len,ndy=ry/len;ctx.strokeStyle='rgba(34,211,238,.3)';ctx.lineWidth=1.5;ctx.setLineDash([5,5]);ctx.beginPath();ctx.moveTo(p.x+ndx*r,p.y+ndy*r);ctx.lineTo(p.x+ndx*200,p.y+ndy*200);ctx.stroke();ctx.setLineDash([]);}
+  ctx.fillStyle="#1e293b";ctx.fillRect(bx,by,bw,bh);
+  if(bw*hp>0){ctx.fillStyle=hp>.5?"#4ade80":hp>.25?"#fbbf24":"#ef4444";ctx.shadowBlur=4;ctx.shadowColor="currentColor";ctx.fillRect(bx,by,bw*hp,bh);ctx.shadowBlur=0;}
+  ctx.font="bold 9px Noto Sans KR";ctx.fillStyle="rgba(255,255,255,.5)";ctx.textBaseline="top";ctx.fillText("Lv."+(myLevel+1),p.x,p.y+r+4);
+  if(Math.hypot(rx,ry)>.08){const len=Math.hypot(rx,ry),ndx=rx/len,ndy=ry/len;ctx.strokeStyle="rgba(34,211,238,.3)";ctx.lineWidth=1.5;ctx.setLineDash([5,5]);ctx.beginPath();ctx.moveTo(p.x+ndx*r,p.y+ndy*r);ctx.lineTo(p.x+ndx*220,p.y+ndy*220);ctx.stroke();ctx.setLineDash([]);}
 }
 
 function drawHUD(ts){
-  ctx.fillStyle='rgba(0,0,0,.65)';ctx.fillRect(0,0,W,44);
-  const lv=LEVELS[myLevel];const hp=Math.max(0,myHp/myMaxHp);const hpC=hp>.5?'#4ade80':hp>.25?'#fbbf24':'#ef4444';
-  ctx.font='bold 12px Noto Sans KR';ctx.textAlign='left';ctx.textBaseline='middle';
-  ctx.fillStyle='#22d3ee';ctx.fillText(`Lv.${myLevel+1}`,8,15);
-  ctx.fillStyle='rgba(250,204,21,.85)';ctx.fillText(`⚔${lv.atk}`,8,31);
+  ctx.fillStyle="rgba(0,0,0,.65)";ctx.fillRect(0,0,W,44);
+  const lv=LEVELS[myLevel];const hp=Math.max(0,myHp/myMaxHp);const hpC=hp>.5?"#4ade80":hp>.25?"#fbbf24":"#ef4444";
+  ctx.font="bold 12px Noto Sans KR";ctx.textAlign="left";ctx.textBaseline="middle";
+  ctx.fillStyle="#22d3ee";ctx.fillText("Lv."+(myLevel+1),8,15);
+  ctx.fillStyle="rgba(250,204,21,.85)";ctx.fillText("⚔"+lv.atk,8,31);
   const bx=70,bw=W-200,bh=14;
-  ctx.fillStyle='#1e293b';ctx.beginPath();if(ctx.roundRect)ctx.roundRect(bx,7,bw,bh,4);else ctx.rect(bx,7,bw,bh);ctx.fill();
+  ctx.fillStyle="#1e293b";ctx.beginPath();if(ctx.roundRect)ctx.roundRect(bx,7,bw,bh,4);else ctx.rect(bx,7,bw,bh);ctx.fill();
   if(bw*hp>0){ctx.fillStyle=hpC;ctx.shadowBlur=4;ctx.shadowColor=hpC;ctx.beginPath();if(ctx.roundRect)ctx.roundRect(bx,7,bw*hp,bh,4);else ctx.rect(bx,7,bw*hp,bh);ctx.fill();ctx.shadowBlur=0;}
-  ctx.fillStyle='white';ctx.font='bold 10px Noto Sans KR';ctx.textAlign='right';ctx.fillText(`${Math.max(0,Math.round(myHp))}/${myMaxHp}`,W-8,15);
+  ctx.fillStyle="white";ctx.font="bold 10px Noto Sans KR";ctx.textAlign="right";ctx.fillText(`${Math.max(0,Math.round(myHp))}/${myMaxHp}`,W-8,15);
   const xpLv=LEVELS[Math.min(myLevel+1,LEVELS.length-1)];const xpPct=myLevel>=LEVELS.length-1?1:Math.min(1,(myXp-lv.xp)/(xpLv.xp-lv.xp));
-  ctx.fillStyle='#0f172a';ctx.fillRect(bx,24,bw,5);
-  if(bw*xpPct>0){ctx.fillStyle='rgba(250,204,21,.6)';ctx.fillRect(bx,24,bw*xpPct,5);}
+  ctx.fillStyle="#0f172a";ctx.fillRect(bx,24,bw,5);if(bw*xpPct>0){ctx.fillStyle="rgba(250,204,21,.6)";ctx.fillRect(bx,24,bw*xpPct,5);}
   // 타이머
   if(gameStartTime>0){
     const elapsed=Math.floor((Date.now()-gameStartTime)/1000);const rem=Math.max(0,GAME_DURATION-elapsed);
     const m=Math.floor(rem/60),s=rem%60;
-    ctx.fillStyle=rem<60?'#ef4444':rem<120?'#fbbf24':'rgba(255,255,255,.7)';
-    ctx.font='bold 14px Noto Sans KR';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(`${m}:${String(s).padStart(2,'0')}`,W/2,21);
-    if(isGM)document.getElementById('gm-timer').textContent=`${m}:${String(s).padStart(2,'0')}`;
+    ctx.fillStyle=rem<60?"#ef4444":rem<120?"#fbbf24":"rgba(255,255,255,.7)";
+    ctx.font="bold 14px Noto Sans KR";ctx.textAlign="center";ctx.textBaseline="middle";ctx.fillText(`${m}:${String(s).padStart(2,"0")}`,W/2,21);
+    if(isGM){document.getElementById("gm-timer").textContent=`${m}:${String(s).padStart(2,"0")}`;}
     if(rem<=0&&gameActive)endGame(false);
   }
-  // 천국 방향 화살표 (항상 표시)
+  // 천국 방향 화살표
   {const dx=HEAVEN.x-myX,dy=HEAVEN.y-myY;const dist=Math.round(Math.hypot(dx,dy));const angle=Math.atan2(dy,dx);
-  const ax=W-55,ay=H-55;
-  ctx.fillStyle='rgba(0,0,0,.4)';ctx.beginPath();ctx.arc(ax,ay,22,0,Math.PI*2);ctx.fill();
-  ctx.strokeStyle='rgba(250,204,21,.8)';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(ax,ay);ctx.lineTo(ax+Math.cos(angle)*18,ay+Math.sin(angle)*18);ctx.stroke();
-  ctx.fillStyle='rgba(250,204,21,.7)';ctx.font='bold 8px Noto Sans KR';ctx.textAlign='center';ctx.textBaseline='top';ctx.fillText(`${Math.round(dist/10)*10}`,ax,ay+24);}
+  const ax=W-52,ay=H-52;
+  ctx.fillStyle="rgba(0,0,0,.45)";ctx.beginPath();ctx.arc(ax,ay,22,0,Math.PI*2);ctx.fill();
+  ctx.strokeStyle="rgba(250,204,21,.8)";ctx.lineWidth=2.5;ctx.beginPath();ctx.moveTo(ax,ay);ctx.lineTo(ax+Math.cos(angle)*17,ay+Math.sin(angle)*17);ctx.stroke();
+  ctx.fillStyle="rgba(250,204,21,.7)";ctx.font="bold 8px Noto Sans KR";ctx.textAlign="center";ctx.textBaseline="top";ctx.fillText(Math.round(dist/50)*50+"m",ax,ay+25);}
   // 성도 현황
   if(gameStartTime>0){
-    const saints=getActiveSaints();const arrived=saints.filter(s=>s.reached).length;
-    ctx.fillStyle='rgba(0,0,0,.5)';ctx.fillRect(W-135,H-48,130,43);ctx.strokeStyle='rgba(255,255,255,.1)';ctx.lineWidth=1;ctx.strokeRect(W-135,H-48,130,43);
-    ctx.font='bold 9px Noto Sans KR';ctx.textAlign='left';ctx.textBaseline='top';
-    ctx.fillStyle='rgba(255,255,255,.6)';ctx.fillText('✝ 성도',W-131,H-45);
-    ctx.fillStyle='#4ade80';ctx.fillText(`${arrived}/${NUM_SAINTS}명 천국 도착`,W-131,H-33);
-    if(!heavenReached){ctx.fillStyle='#fbbf24';ctx.fillText('먼저 천국에 가라!',W-131,H-21);}
-    else{ctx.fillStyle='#93c5fd';ctx.fillText('성도들이 오고 있다!',W-131,H-21);}
+    const saints=getActiveSaints();
+    const alive2=saints.filter(s=>!s.dead&&!s.reached).length;
+    const reached=saints.filter(s=>s.reached).length;
+    const dead=saints.filter(s=>s.dead).length;
+    ctx.fillStyle="rgba(0,0,0,.5)";ctx.fillRect(W-130,H-50,125,44);ctx.strokeStyle="rgba(255,255,255,.1)";ctx.lineWidth=1;ctx.strokeRect(W-130,H-50,125,44);
+    ctx.font="bold 9px Noto Sans KR";ctx.textAlign="left";ctx.textBaseline="top";
+    ctx.fillStyle="rgba(255,255,255,.6)";ctx.fillText("✝ 성도 현황",W-126,H-47);
+    ctx.fillStyle="#4ade80";ctx.fillText(reached+"/"+NUM_SAINTS+" 천국",W-126,H-35);
+    ctx.fillStyle="#fbbf24";ctx.fillText(alive2+" 이동중 / "+dead+" 쓰러짐",W-126,H-23);
+    if(isGM){document.getElementById("gm-saint-status").textContent=`성도 도착:${reached}/${NUM_SAINTS} / 쓰러짐:${dead}`;}
   }
   if(pvsActive&&Date.now()<pvsEnd){
-    ctx.fillStyle='rgba(250,204,21,.15)';ctx.fillRect(0,44,W,22);
-    ctx.fillStyle='rgba(250,204,21,.9)';ctx.font='bold 11px Noto Sans KR';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText('✝ 성도의 견인 — 하나님의 손 안에 있다!',W/2,55);
+    ctx.fillStyle="rgba(250,204,21,.15)";ctx.fillRect(0,44,W,22);
+    ctx.fillStyle="rgba(250,204,21,.9)";ctx.font="bold 11px Noto Sans KR";ctx.textAlign="center";ctx.textBaseline="middle";ctx.fillText("✝ 성도의 견인 — 하나님의 손 안에 있다!",W/2,55);
   }
   drawMinimap();
 }
 
 function drawMinimap(){
-  const mw=130,mh=50,mx=8,my=46;const sx=mw/GW,sy=mh/GH;
-  ctx.fillStyle='rgba(0,0,0,.65)';ctx.strokeStyle='rgba(255,255,255,.18)';ctx.lineWidth=1;ctx.fillRect(mx,my,mw,mh);ctx.strokeRect(mx,my,mw,mh);
-  WALLS.forEach(w=>{ctx.fillStyle='rgba(74,222,128,.2)';ctx.fillRect(mx+w.x*sx,my+w.y*sy,Math.max(1,w.w*sx),Math.max(1,w.h*sy));});
-  // 천국
-  ctx.fillStyle='rgba(250,204,21,.7)';ctx.beginPath();ctx.arc(mx+HEAVEN.x*sx,my+HEAVEN.y*sy,4,0,Math.PI*2);ctx.fill();
-  // 성도
-  if(gameStartTime>0){getActiveSaints().filter(s=>!s.reached).forEach(s=>{ctx.fillStyle='rgba(255,255,255,.7)';ctx.beginPath();ctx.arc(mx+s.x*sx,my+s.y*sy,2,0,Math.PI*2);ctx.fill();});}
-  // 적
-  localEnemies.forEach(e=>{ctx.fillStyle=ETYPES[e.type].col;ctx.beginPath();ctx.arc(mx+e.x*sx,my+e.y*sy,2,0,Math.PI*2);ctx.fill();});
-  // 플레이어들
-  Object.values(allPlayers).forEach(p=>{if(!p.alive)return;ctx.fillStyle=p.uid===myUid?'#22d3ee':'#4ade80';ctx.beginPath();ctx.arc(mx+(p._rx||p.x)*sx,my+(p._ry||p.y)*sy,p.uid===myUid?3:2,0,Math.PI*2);ctx.fill();});
-  ctx.strokeStyle='rgba(255,255,255,.4)';ctx.lineWidth=1;ctx.strokeRect(mx+camX*sx,my+camY*sy,W*sx,H*sy);
+  const mw=128,mh=48,mx=8,my=46;const scx=mw/GW,scy=mh/GH;
+  ctx.fillStyle="rgba(0,0,0,.65)";ctx.strokeStyle="rgba(255,255,255,.18)";ctx.lineWidth=1;ctx.fillRect(mx,my,mw,mh);ctx.strokeRect(mx,my,mw,mh);
+  WALLS.forEach(w=>{ctx.fillStyle="rgba(74,222,128,.2)";ctx.fillRect(mx+w.x*scx,my+w.y*scy,Math.max(1,w.w*scx),Math.max(1,w.h*scy));});
+  ctx.fillStyle="rgba(250,204,21,.7)";ctx.beginPath();ctx.arc(mx+HEAVEN.x*scx,my+HEAVEN.y*scy,4,0,Math.PI*2);ctx.fill();
+  if(gameStartTime>0){
+    getActiveSaints().filter(s=>!s.dead&&!s.reached).forEach(s=>{ctx.fillStyle="rgba(255,255,255,.7)";ctx.beginPath();ctx.arc(mx+s.x*scx,my+s.y*scy,2,0,Math.PI*2);ctx.fill();});
+    localEnemies.forEach(e=>{ctx.fillStyle=ETYPES[e.type].col;ctx.beginPath();ctx.arc(mx+e.x*scx,my+e.y*scy,2,0,Math.PI*2);ctx.fill();});
+  }
+  Object.values(allPlayers).forEach(p=>{if(!p.alive)return;ctx.fillStyle=p.uid===myUid?"#22d3ee":"#4ade80";ctx.beginPath();ctx.arc(mx+(p._rx||p.x)*scx,my+(p._ry||p.y)*scy,p.uid===myUid?3:2,0,Math.PI*2);ctx.fill();});
+  ctx.strokeStyle="rgba(255,255,255,.4)";ctx.lineWidth=1;ctx.strokeRect(mx+camX*scx,my+camY*scy,W*scx,H*scy);
 }
 
 function drawJoys(){
   if(!gameActive||!alive)return;
-  function jd(j,defX,defY){
+  function jd(j,defX,defY,actCol){
     const bx=j.active?j.bx:defX,by=j.active?j.by:defY;
-    let dx=j.active?(j.cx-j.bx):0,dy=j.active?(j.cy-j.by):0;const d=Math.hypot(dx,dy);if(d>JOY_R){dx=dx/d*JOY_R;dy=dy/d*JOY_R;}
+    let dx=j.active?(j.cx-j.bx):0,dy=j.active?(j.cy-j.by):0;const d=Math.hypot(dx,dy);if(d>JR){dx=dx/d*JR;dy=dy/d*JR;}
     ctx.beginPath();ctx.arc(bx,by,56,0,Math.PI*2);ctx.fillStyle=`rgba(255,255,255,${j.active?.07:.04})`;ctx.fill();ctx.strokeStyle=`rgba(255,255,255,${j.active?.18:.09})`;ctx.lineWidth=1.5;ctx.stroke();
-    ctx.strokeStyle=`rgba(255,255,255,${j.active?.08:.04})`;ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(bx-52,by);ctx.lineTo(bx+52,by);ctx.stroke();ctx.beginPath();ctx.moveTo(bx,by-52);ctx.lineTo(bx,by+52);ctx.stroke();
-    ctx.beginPath();ctx.arc(bx+dx,by+dy,24,0,Math.PI*2);ctx.fillStyle=`rgba(255,255,255,${j.active?.55:.18})`;ctx.fill();ctx.strokeStyle=`rgba(255,255,255,${j.active?.8:.3})`;ctx.lineWidth=2;ctx.stroke();
+    ctx.strokeStyle=`rgba(255,255,255,${j.active?.07:.04})`;ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(bx-52,by);ctx.lineTo(bx+52,by);ctx.stroke();ctx.beginPath();ctx.moveTo(bx,by-52);ctx.lineTo(bx,by+52);ctx.stroke();
+    ctx.beginPath();ctx.arc(bx+dx,by+dy,24,0,Math.PI*2);ctx.fillStyle=`rgba(${actCol},${j.active?.55:.18})`;ctx.fill();ctx.strokeStyle=`rgba(${actCol},${j.active?.8:.3})`;ctx.lineWidth=2;ctx.stroke();
   }
-  jd(jL,100,H-105);jd(jR,W-100,H-105);
-  ctx.font='bold 10px Noto Sans KR';ctx.textAlign='center';ctx.textBaseline='top';ctx.fillStyle='rgba(255,255,255,.2)';
-  ctx.fillText('이동',100,H-44);ctx.fillText('공격',W-100,H-44);
+  jd(jL,100,H-105,"255,255,255");jd(jR,W-100,H-105,"34,211,238");
+  ctx.font="bold 10px Noto Sans KR";ctx.textAlign="center";ctx.textBaseline="top";ctx.fillStyle="rgba(255,255,255,.2)";
+  ctx.fillText("이동",100,H-44);ctx.fillText("공격",W-100,H-44);
 }
 
 // ── 게임 루프 ─────────────────────────────────────────
@@ -666,126 +727,110 @@ function startGameLoop(){
   if(loopId)clearInterval(loopId);
   loopId=setInterval(async()=>{
     if(!gameActive||!alive)return;
-    // 이동 (벽 충돌 포함)
+    const spd=LEVELS[myLevel].spd;
     if(Math.abs(lx)>.05||Math.abs(ly)>.05){
-      const spd=LEVELS[myLevel].spd;
-      const mv=moveWithSlide(myX,myY,lx*spd,ly*spd,LEVELS[myLevel].r);
-      myX=Math.max(22,Math.min(GW-22,mv.x));
-      myY=Math.max(22,Math.min(GH-22,mv.y));
+      const mv=moveSlide(myX,myY,lx*spd,ly*spd,LEVELS[myLevel].r);
+      myX=Math.max(22,Math.min(GW-22,mv.x));myY=Math.max(22,Math.min(GH-22,mv.y));
     }
-    // 프론티어 업데이트
-    frontier=computeFrontier();
-    if(isGM){
-      const pct=Math.round((frontier/GW)*100);
-      document.getElementById('gm-frontier').textContent=`최전선: ${pct}% (${Math.round(frontier)})`;
-    }
+    // 프론티어 갱신
+    frontier=myX;Object.values(allPlayers).forEach(p=>{if((p.x||0)>frontier)frontier=p.x;});
     // 천국 도달 체크
     if(!heavenReached&&Math.hypot(myX-HEAVEN.x,myY-HEAVEN.y)<HEAVEN.r+LEVELS[myLevel].r+10){
-      heavenReached=true;
-      setDoc(STATE,{heavenReached:true},{merge:true}).catch(()=>{});
+      heavenReached=true;setDoc(STATE,{heavenReached:true},{merge:true}).catch(()=>{});
     }
     // 발사
-    if(Math.hypot(rx,ry)>.08){
-      const now=Date.now();const cd=Math.max(160,460-myLevel*45);
-      if(now-lastFire>cd){lastFire=now;await fire();}
-    }
-    // 적
+    if(Math.hypot(rx,ry)>.08){const now=Date.now();const cd=Math.max(160,460-myLevel*45);if(now-lastFire>cd){lastFire=now;playerFire();}}
+    // 적/총알
     processWaves();
     const saints=getActiveSaints();
     updateEnemies(saints);
+    updateBullets(saints);
     // 성도 전원 도착 체크
-    if(heavenReached&&saints.every(s=>s.reached)){
-      endGame(true);
+    if(heavenReached&&saints.every(s=>s.reached||s.dead)){
+      const allReached=saints.filter(s=>s.reached).length;
+      if(allReached>0)endGame(true);
     }
-    // 시간 종료
     if(gameStartTime>0&&(Date.now()-gameStartTime)/1000>=GAME_DURATION)endGame(false);
   },33);
   if(syncId)clearInterval(syncId);
-  // 250ms 동기화 (30명 퍼포먼스)
   syncId=setInterval(()=>{
     if(!alive||!gameActive)return;
     updateDoc(PREF(myUid),{x:Math.round(myX),y:Math.round(myY)}).catch(()=>{});
-  },250);
+  },280);
 }
 
 function endGame(success){
-  if(!gameActive&&!isGM)return;
-  gameActive=false;
+  if(!gameActive)return;gameActive=false;
   if(loopId)clearInterval(loopId);if(syncId)clearInterval(syncId);
-  setDoc(STATE,{gameStatus:'ended',success},{merge:true}).catch(()=>{});
+  setDoc(STATE,{gameStatus:"ended",success},{merge:true}).catch(()=>{});
   showEnd(success);
 }
-
 function showEnd(success){
-  document.getElementById('end-tit').textContent=success?'✝ 성도들이 천국에 도착했습니다!':'☠ 시간이 다했습니다';
-  document.getElementById('end-tit').style.color=success?'#4ade80':'#ef4444';
-  document.getElementById('end-sub').innerHTML=success
-    ?'하나님의 손 안에서 아무것도 끊을 수 없었습니다.<br>성도의 견인을 몸으로 경험했습니다!'
-    :'더 많은 플레이어가 함께했다면 어땠을까요?<br>성도를 인도하는 것은 혼자가 아니라 함께입니다.';
-  go('end');
+  document.getElementById("end-tit").textContent=success?"✝ 성도들이 천국에 도착했습니다!":"☠ 시간이 다했습니다";
+  document.getElementById("end-tit").style.color=success?"#4ade80":"#ef4444";
+  document.getElementById("end-sub").innerHTML=success
+    ?"하나님의 손 안에서 아무것도 끊을 수 없었습니다!<br>성도의 견인을 몸으로 경험했습니다."
+    :"더 많은 플레이어가 함께 지켰다면 어땠을까요?<br>성도를 인도하는 것은 혼자가 아닙니다.";
+  go("end");
 }
 
 // ── Firebase 리스너 ───────────────────────────────────
 function setupListeners(){
   if(listenersSetup)return;listenersSetup=true;
   onSnapshot(STATE,snap=>{
-    if(!snap.exists())return;const d=snap.data();const ns=d.gameStatus||'lobby';
+    if(!snap.exists())return;const d=snap.data();const ns=d.gameStatus||"lobby";
     if(d.gameStartTime)gameStartTime=d.gameStartTime;
     if(d.heavenReached)heavenReached=true;
-    // 견인
-    const nowPvs=d.perseveranceActive||false;
-    if(nowPvs&&!pvsActive){
+    // 견인 활성화
+    if(d.perseveranceActive&&!pvsActive){
       pvsActive=true;pvsEnd=d.perseveranceEnd||0;
-      document.getElementById('pvs-flash').classList.add('show');
-      setTimeout(()=>document.getElementById('pvs-flash').classList.remove('show'),2000);
+      document.getElementById("pvs-flash").classList.add("show");
+      setTimeout(()=>document.getElementById("pvs-flash").classList.remove("show"),2000);
     }
-    if(!nowPvs&&pvsActive&&Date.now()>(d.perseveranceEnd||0))pvsActive=false;
-    if(ns==='reset'&&!isGM){
+    if(!d.perseveranceActive&&Date.now()>(d.perseveranceEnd||0))pvsActive=false;
+    if(ns==="reset"&&!isGM){
       if(loopId)clearInterval(loopId);if(syncId)clearInterval(syncId);listenersSetup=false;
-      gameStartTime=0;heavenReached=false;pvsActive=false;
-      document.getElementById('name-inp').value='';go('entry');
-    } else if(ns==='playing'&&!gameActive&&!isGM&&myName){
-      if(!gameStartTime)gameStartTime=Date.now();
-      gameActive=true;alive=true;dying=false;localEnemies=[];processedWaves=new Set();
-      go('game');startGameLoop();
-    } else if(ns==='ended'&&!isGM){
+      gameStartTime=0;heavenReached=false;pvsActive=false;localEnemies=[];processedWaves=new Set();localBullets=[];
+      document.getElementById("name-inp").value="";go("entry");
+    } else if(ns==="playing"&&!gameActive&&!isGM&&myName){
+      if(!gameStartTime||gameStartTime===0)gameStartTime=Date.now();
+      gameActive=true;alive=true;dying=false;localEnemies=[];processedWaves=new Set();localBullets=[];
+      go("game");startGameLoop();
+    } else if(ns==="ended"&&!isGM){
       gameActive=false;showEnd(d.success||false);
     }
   });
   onSnapshot(PCOL,snap=>{
     snap.forEach(docSnap=>{
       const uid=docSnap.id,d=docSnap.data();
-      if(!allPlayers[uid])allPlayers[uid]={...d,uid};
-      else Object.assign(allPlayers[uid],d,{uid});
-      if(uid===myUid&&d.hp!==undefined){
-        myHp=d.hp;
-        if(d.hp<=0&&d.alive&&alive&&!dying&&!pvsActive)die();
-      }
+      if(!allPlayers[uid])allPlayers[uid]={...d,uid};else Object.assign(allPlayers[uid],d,{uid});
+      if(uid===myUid&&d.hp!==undefined&&d.hp<=0&&d.alive&&alive&&!dying&&!pvsActive)die();
     });
     const uids=new Set(snap.docs.map(d=>d.id));
     Object.keys(allPlayers).forEach(uid=>{if(!uids.has(uid))delete allPlayers[uid];});
     const cnt=snap.docs.length;
-    document.getElementById('lobby-cnt').textContent=`${cnt}명 접속 중`;
-    document.getElementById('gm-count').textContent=`${cnt}명`;
+    document.getElementById("lobby-cnt").textContent=cnt+"명 접속 중";
+    document.getElementById("gm-count").textContent=cnt+"명";
     renderGMList(snap.docs.map(d=>({uid:d.id,...d.data()})));
   });
   onSnapshot(ECOL,snap=>{snap.forEach(d=>{enemyHPs[d.id]=d.data().hp??0;});});
+  onSnapshot(SCOL,snap=>{snap.forEach(d=>{saintHPs[d.id]=d.data().hp??SAINT_MAX_HP;});});
 }
 
 function renderGMList(ps){
-  const list=document.getElementById('gm-list');list.innerHTML='';
+  const list=document.getElementById("gm-list");list.innerHTML="";
   ps.slice(0,15).forEach(p=>{
-    const div=document.createElement('div');div.className='gm-item';
-    div.innerHTML=`<span style="flex:1;font-weight:700;">${p.name||'?'}</span><span style="font-size:.72rem;color:#64748b;">Lv${(p.level||0)+1} ❤${Math.max(0,Math.round(p.hp||0))} K${p.kills||0}</span>`;
+    const div=document.createElement("div");div.className="gm-item";
+    div.innerHTML=`<span style="flex:1;font-weight:700;">${p.name||"?"}</span><span style="font-size:.72rem;color:#64748b;">Lv${(p.level||0)+1} ❤${Math.max(0,Math.round(p.hp||0))} K${p.kills||0}</span>`;
     list.appendChild(div);
   });
-  if(ps.length>15){const d=document.createElement('div');d.className='gm-item';d.textContent=`... 외 ${ps.length-15}명`;d.style.color='#475569';list.appendChild(d);}
+  if(ps.length>15){const d=document.createElement("div");d.className="gm-item";d.textContent="외 "+(ps.length-15)+"명";d.style.color="#475569";list.appendChild(d);}
 }
 
 function go(id){
-  ['entry','lobby','gm','end'].forEach(x=>document.getElementById(x).classList.add('hidden'));
-  canvas.classList.remove('vis');document.getElementById('dead-ov').classList.remove('vis');
-  if(id==='game')canvas.classList.add('vis');else document.getElementById(id).classList.remove('hidden');
+  ["entry","lobby","gm","end"].forEach(x=>document.getElementById(x).classList.add("hidden"));
+  canvas.classList.remove("vis");document.getElementById("dead-ov").classList.remove("vis");
+  if(id==="game")canvas.classList.add("vis");else document.getElementById(id).classList.remove("hidden");
 }
 
 // ── GM 액션 ──────────────────────────────────────────
@@ -795,64 +840,64 @@ async function activatePVS(){
   // 수문장 제거
   const es=await getDocs(ECOL);
   const b=writeBatch(db);
-  es.forEach(d=>{if(d.data().hp>=999999||localEnemies.find(e=>e.id===d.id&&e.type==='guardian'))b.update(d.ref,{hp:0,dead:true});});
+  es.forEach(d=>{if((d.data().hp||0)>=999999)b.update(d.ref,{hp:0,dead:true});});
   await b.commit();
+  // 관문 벽 제거 표시 (State에 저장)
+  await updateDoc(STATE,{gateOpen:true});
   setTimeout(async()=>{await updateDoc(STATE,{perseveranceActive:false}).catch(()=>{});},PVS_MS);
 }
+
 async function startGame(){
   const snap=await getDocs(PCOL);const batch=writeBatch(db);const now=Date.now();
-  snap.forEach(docSnap=>{const d=docSnap.data();batch.update(docSnap.ref,{alive:true,x:SPAWN.x+(Math.random()-.5)*40,y:SPAWN.y+(Math.random()-.5)*40,hp:LEVELS[0].maxHp,maxHp:LEVELS[0].maxHp,level:0,xp:0,kills:0});});
+  snap.forEach(docSnap=>{batch.update(docSnap.ref,{alive:true,x:SPAWN.x+(Math.random()-.5)*40,y:SPAWN.y+(Math.random()-.5)*40,hp:LEVELS[0].maxHp,maxHp:LEVELS[0].maxHp,level:0,xp:0,kills:0});});
   await batch.commit();
   const es=await getDocs(ECOL);const eb=writeBatch(db);es.forEach(d=>eb.delete(d.ref));await eb.commit();
-  await setDoc(STATE,{gameStatus:'playing',gameStartTime:now,heavenReached:false,success:false,perseveranceActive:false,perseveranceEnd:0});
+  const ss=await getDocs(SCOL);const sb=writeBatch(db);
+  for(let i=0;i<NUM_SAINTS;i++)sb.set(doc(db,ROOT,"saints","s"+i),{hp:SAINT_MAX_HP});
+  await sb.commit();
+  await setDoc(STATE,{gameStatus:"playing",gameStartTime:now,heavenReached:false,success:false,perseveranceActive:false,perseveranceEnd:0,gateOpen:false});
 }
 async function replayGame(){await startGame();}
 async function resetGame(){
-  if(!confirm('초기화합니다.'))return;
-  await setDoc(STATE,{gameStatus:'reset',gameStartTime:0,heavenReached:false,perseveranceActive:false,perseveranceEnd:0});
+  if(!confirm("초기화합니다."))return;
+  await setDoc(STATE,{gameStatus:"reset",gameStartTime:0,heavenReached:false,perseveranceActive:false,perseveranceEnd:0,gateOpen:false});
   setTimeout(async()=>{
     const ps=await getDocs(PCOL);const pb=writeBatch(db);ps.forEach(d=>pb.delete(d.ref));await pb.commit();
     const es=await getDocs(ECOL);const eb=writeBatch(db);es.forEach(d=>eb.delete(d.ref));await eb.commit();
-    await setDoc(STATE,{gameStatus:'lobby',gameStartTime:0,heavenReached:false,perseveranceActive:false,perseveranceEnd:0});
+    const ss=await getDocs(SCOL);const sb=writeBatch(db);ss.forEach(d=>sb.delete(d.ref));await sb.commit();
+    await setDoc(STATE,{gameStatus:"lobby",gameStartTime:0,heavenReached:false,perseveranceActive:false,perseveranceEnd:0,gateOpen:false});
   },800);
 }
 
-// ── 입장 ─────────────────────────────────────────────
 async function joinGame(){
-  const name=document.getElementById('name-inp').value.trim();
-  if(!name){document.getElementById('name-inp').focus();return;}
+  const name=document.getElementById("name-inp").value.trim();if(!name){document.getElementById("name-inp").focus();return;}
   myName=name;myMaxHp=LEVELS[0].maxHp;myHp=myMaxHp;myXp=0;myLevel=0;myKills=0;
   myX=SPAWN.x+(Math.random()-.5)*40;myY=SPAWN.y+(Math.random()-.5)*40;
   await setDoc(PREF(myUid),{name:myName,x:Math.round(myX),y:Math.round(myY),hp:myMaxHp,maxHp:myMaxHp,alive:true,level:0,xp:0,kills:0,joinedAt:Date.now()});
-  go('lobby');setupListeners();
+  go("lobby");setupListeners();
 }
 
 function chkPW(){
-  if(document.getElementById('pw-inp').value==='1004'){
-    document.getElementById('pw-modal').classList.remove('vis');
-    isGM=true;go('gm');setupListeners();
+  if(document.getElementById("pw-inp").value==="1004"){
+    document.getElementById("pw-modal").classList.remove("vis");isGM=true;go("gm");setupListeners();
   } else {
-    document.getElementById('pw-err').textContent='비밀번호가 틀렸습니다';
-    document.getElementById('pw-inp').value='';document.getElementById('pw-inp').focus();
+    document.getElementById("pw-err").textContent="비밀번호가 틀렸습니다";
+    document.getElementById("pw-inp").value="";document.getElementById("pw-inp").focus();
   }
 }
 
-// ── 이벤트 리스너 ────────────────────────────────────
-document.getElementById('join-btn').addEventListener('click',joinGame);
-document.getElementById('name-inp').addEventListener('keypress',e=>{if(e.key==='Enter')joinGame();});
-document.getElementById('pvs-btn').addEventListener('click',activatePVS);
-document.getElementById('start-btn').addEventListener('click',startGame);
-document.getElementById('reset-btn').addEventListener('click',resetGame);
-document.getElementById('replay-btn').addEventListener('click',replayGame);
-document.getElementById('exit-gm-btn').addEventListener('click',()=>{isGM=false;go('entry');});
-document.getElementById('gear').addEventListener('click',()=>{
-  document.getElementById('pw-inp').value='';document.getElementById('pw-err').textContent='';
-  document.getElementById('pw-modal').classList.add('vis');
-  setTimeout(()=>document.getElementById('pw-inp').focus(),100);
-});
-document.getElementById('pw-ok').addEventListener('click',chkPW);
-document.getElementById('pw-cx').addEventListener('click',()=>document.getElementById('pw-modal').classList.remove('vis'));
-document.getElementById('pw-inp').addEventListener('keypress',e=>{if(e.key==='Enter')chkPW();});
+// ── 이벤트 ───────────────────────────────────────────
+document.getElementById("join-btn").addEventListener("click",joinGame);
+document.getElementById("name-inp").addEventListener("keypress",e=>{if(e.key==="Enter")joinGame();});
+document.getElementById("pvs-btn").addEventListener("click",activatePVS);
+document.getElementById("start-btn").addEventListener("click",startGame);
+document.getElementById("reset-btn").addEventListener("click",resetGame);
+document.getElementById("replay-btn").addEventListener("click",replayGame);
+document.getElementById("exit-gm-btn").addEventListener("click",()=>{isGM=false;go("entry");});
+document.getElementById("gear").addEventListener("click",()=>{document.getElementById("pw-inp").value="";document.getElementById("pw-err").textContent="";document.getElementById("pw-modal").classList.add("vis");setTimeout(()=>document.getElementById("pw-inp").focus(),100);});
+document.getElementById("pw-ok").addEventListener("click",chkPW);
+document.getElementById("pw-cx").addEventListener("click",()=>document.getElementById("pw-modal").classList.remove("vis"));
+document.getElementById("pw-inp").addEventListener("keypress",e=>{if(e.key==="Enter")chkPW();});
 
 try{await signInAnonymously(auth);myUid=auth.currentUser.uid;}catch(e){console.error(e);}
 </script>
