@@ -128,7 +128,7 @@ body{font-family:"Noto Sans KR",sans-serif;background:#0a1628;color:white;overfl
 <div id="end" class="screen hidden">
   <div id="end-tit" class="end-tit"></div>
   <div id="end-sub" class="end-sub"></div>
-  <div class="end-verse">
+  <div id="end-verse" class="end-verse">
     "내 아버지의 손에서 빼앗을 자가 없느니라"<br>
     <span style="font-size:.8rem;color:#86efac;">— 요한복음 10:29</span>
   </div>
@@ -769,11 +769,11 @@ function startGameLoop(){
     updateBullets(saints);
     // 승리: 성도 전원 도착
     if(saints.every(s=>s.reached||s.dead)&&saints.some(s=>s.reached)){
-      endGame(true);
+      endGame(true, pvsActive); // 견인 활성 중 승리인지 여부 전달
     }
     // 게임오버: 성도 전원 사망
     if(saints.length>0&&saints.every(s=>s.dead)){
-      endGame(false);
+      endGame(false, false);
     }
   },33);
   if(syncId)clearInterval(syncId);
@@ -783,18 +783,36 @@ function startGameLoop(){
   },280);
 }
 
-function endGame(success){
+function endGame(success, pvsVictory=false){
   if(!gameActive)return;gameActive=false;
   if(loopId)clearInterval(loopId);if(syncId)clearInterval(syncId);
-  setDoc(STATE,{gameStatus:"ended",success},{merge:true}).catch(()=>{});
-  showEnd(success);
+  setDoc(STATE,{gameStatus:"ended",success,pvsVictory},{merge:true}).catch(()=>{});
+  showEnd(success, pvsVictory);
 }
-function showEnd(success){
-  document.getElementById("end-tit").textContent=success?"✝ 성도들이 천국에 도착했습니다!":"☠ 성도들이 모두 쓰러졌습니다";
-  document.getElementById("end-tit").style.color=success?"#4ade80":"#ef4444";
-  document.getElementById("end-sub").innerHTML=success
-    ?"하나님의 손 안에서 아무것도 끊을 수 없었습니다!<br>성도의 견인을 몸으로 경험했습니다."
-    :"세상의 유혹과 시험이 너무 강했습니다.<br>성도의 견인은 우리의 힘이 아니라 하나님의 은혜입니다.";
+function showEnd(success, pvsVictory=false){
+  if(pvsVictory){
+    // 성도의 견인 승리 — 특별 화면
+    document.getElementById("end-tit").textContent="✝ 성도의 견인!";
+    document.getElementById("end-tit").style.color="#facc15";
+    document.getElementById("end-sub").innerHTML=
+      "아무리 강한 적도 막을 수 없었습니다!<br>하나님의 손 안에서 성도들이 천국에 들어갔습니다.";
+    document.getElementById("end-verse").innerHTML=
+      '"내가 그들에게 영생을 주노니 영원히 멸망하지 아니할 것이요<br>또 그들을 내 손에서 빼앗을 자가 없느니라"<br><span style="font-size:.8rem;color:#fde68a;">— 요한복음 10:28</span>';
+  } else if(success){
+    document.getElementById("end-tit").textContent="✝ 성도들이 천국에 도착했습니다!";
+    document.getElementById("end-tit").style.color="#4ade80";
+    document.getElementById("end-sub").innerHTML=
+      "하나님의 손 안에서 아무것도 끊을 수 없었습니다!<br>성도의 견인을 몸으로 경험했습니다.";
+    document.getElementById("end-verse").innerHTML=
+      '"내 아버지의 손에서 빼앗을 자가 없느니라"<br><span style="font-size:.8rem;color:#86efac;">— 요한복음 10:29</span>';
+  } else {
+    document.getElementById("end-tit").textContent="☠ 성도들이 모두 쓰러졌습니다";
+    document.getElementById("end-tit").style.color="#ef4444";
+    document.getElementById("end-sub").innerHTML=
+      "세상의 유혹과 시험이 너무 강했습니다.<br>성도의 견인은 우리의 힘이 아니라 하나님의 은혜입니다.";
+    document.getElementById("end-verse").innerHTML=
+      '"내 아버지의 손에서 빼앗을 자가 없느니라"<br><span style="font-size:.8rem;color:#86efac;">— 요한복음 10:29</span>';
+  }
   go("end");
 }
 
@@ -823,7 +841,7 @@ function setupListeners(){
       waveCount=0;lastWaveTime=0;
       go("game");startGameLoop();
     } else if(ns==="ended"&&!isGM){
-      gameActive=false;showEnd(d.success||false);
+      gameActive=false;showEnd(d.success||false, d.pvsVictory||false);
     }
   });
   onSnapshot(PCOL,snap=>{
