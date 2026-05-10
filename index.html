@@ -716,7 +716,7 @@ function drawHUD(ts){
     ctx.fillStyle="#fbbf24";ctx.fillText(alive2+" 이동중 / "+dead+" 쓰러짐",W-126,H-23);
     if(isGM){document.getElementById("gm-saint-status").textContent=`성도 도착:${reached}/${NUM_SAINTS} / 쓰러짐:${dead}`;}
   }
-  if(pvsActive&&Date.now()<pvsEnd){
+  if(pvsActive){
     ctx.fillStyle="rgba(250,204,21,.15)";ctx.fillRect(0,44,W,22);
     ctx.fillStyle="rgba(250,204,21,.9)";ctx.font="bold 11px Noto Sans KR";ctx.textAlign="center";ctx.textBaseline="middle";ctx.fillText("✝ 성도의 견인 — 하나님의 손 안에 있다!",W/2,55);
   }
@@ -766,7 +766,7 @@ function startGameLoop(){
     processWaves();
     const saints=getActiveSaints();
     // ✝ 성도의 견인: 모든 적 HP 지속 감소
-    if(pvsActive&&Date.now()<pvsEnd){
+    if(pvsActive){
       localEnemies.forEach(e=>{
         const drain=Math.max(3, Math.floor(e.maxHp*0.025)); // 매 프레임 max HP의 2.5%씩 감소
         e.hp=Math.max(0,e.hp-drain);
@@ -840,11 +840,11 @@ function setupListeners(){
     if(d.heavenReached)heavenReached=true;
     // 견인 활성화
     if(d.perseveranceActive&&!pvsActive){
-      pvsActive=true;pvsEnd=d.perseveranceEnd||0;
+      pvsActive=true;pvsEnd=9999999999999;
       document.getElementById("pvs-flash").classList.add("show");
       setTimeout(()=>document.getElementById("pvs-flash").classList.remove("show"),2000);
     }
-    if(!d.perseveranceActive&&Date.now()>(d.perseveranceEnd||0))pvsActive=false;
+    // 견인은 게임 종료 시에만 해제 (자동 해제 없음)
     if(ns==="reset"&&!isGM){
       if(loopId)clearInterval(loopId);if(syncId)clearInterval(syncId);listenersSetup=false;
       gameStartTime=0;heavenReached=false;pvsActive=false;localEnemies=[];processedWaves=new Set();localBullets=[];
@@ -894,16 +894,14 @@ function go(id){
 
 // ── GM 액션 ──────────────────────────────────────────
 async function activatePVS(){
-  const end=Date.now()+PVS_MS;
-  await setDoc(STATE,{perseveranceActive:true,perseveranceEnd:end},{merge:true});
+  await setDoc(STATE,{perseveranceActive:true,perseveranceEnd:9999999999999},{merge:true});
   // 수문장 제거
   const es=await getDocs(ECOL);
   const b=writeBatch(db);
   es.forEach(d=>{if((d.data().hp||0)>=999999)b.update(d.ref,{hp:0,dead:true});});
   await b.commit();
-  // 관문 벽 제거 표시 (State에 저장)
   await updateDoc(STATE,{gateOpen:true});
-  setTimeout(async()=>{await updateDoc(STATE,{perseveranceActive:false}).catch(()=>{});},PVS_MS);
+  // 타임아웃 제거 — 성도들이 천국에 들어갈 때까지 유지
 }
 
 async function startGame(){
