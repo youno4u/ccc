@@ -304,7 +304,7 @@ function moveSlide(ox,oy,dx,dy,r){
 // ── 조이스틱 ─────────────────────────────────────────
 const JR=55;
 let jL={id:-1,bx:0,by:0,cx:0,cy:0,active:false};
-let jR={id:-1,bx:0,by:0,cx:0,cy:0,active:false};
+let jRJ={id:-1,bx:0,by:0,cx:0,cy:0,active:false};
 let lx=0,ly=0,rx=0,ry=0;
 function jSt(j,t){j.id=t.identifier;j.bx=t.clientX;j.by=t.clientY;j.cx=t.clientX;j.cy=t.clientY;j.active=true;}
 function jMv(j,t){
@@ -315,9 +315,21 @@ function jMv(j,t){
   if(j===jL){lx=dx/JR;ly=dy/JR;}else{rx=dx/JR;ry=dy/JR;}
 }
 function jEn(j,t){if(t.identifier!==j.id)return;j.active=false;j.id=-1;if(j===jL){lx=0;ly=0;}else{rx=0;ry=0;}}
-document.addEventListener("touchstart",e=>{if(!canvas.classList.contains("vis"))return;e.preventDefault();for(const t of e.changedTouches){if(t.clientX<W/2&&!jL.active)jSt(jL,t);else if(t.clientX>=W/2&&!jR.active)jSt(jR,t);}},{passive:false});
-document.addEventListener("touchmove",e=>{if(!canvas.classList.contains("vis"))return;e.preventDefault();for(const t of e.changedTouches){jMv(jL,t);jMv(jR,t);}},{passive:false});
-document.addEventListener("touchend",e=>{if(!canvas.classList.contains("vis"))return;e.preventDefault();for(const t of e.changedTouches){jEn(jL,t);jEn(jR,t);}},{passive:false});
+document.addEventListener("touchstart",e=>{
+  if(!canvas.classList.contains("vis"))return;
+  for(const t of e.changedTouches){
+    if(t.clientX<W/2&&!jL.active)jSt(jL,t);
+    else if(t.clientX>=W/2&&!jRJ.active)jSt(jRJ,t);
+  }
+});
+document.addEventListener("touchmove",e=>{
+  if(!canvas.classList.contains("vis"))return;
+  for(const t of e.changedTouches){jMv(jL,t);jMv(jRJ,t);}
+});
+document.addEventListener("touchend",e=>{
+  if(!canvas.classList.contains("vis"))return;
+  for(const t of e.changedTouches){jEn(jL,t);jEn(jRJ,t);}
+});
 
 // ── 성도 위치 (결정론적, 경로 따라 정확히) ──────────
 // 안전 스폰 위치 찾기 (벽 안에 있으면 y 조정)
@@ -745,7 +757,7 @@ function drawJoys(){
     ctx.strokeStyle=`rgba(255,255,255,${j.active?.07:.04})`;ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(bx-52,by);ctx.lineTo(bx+52,by);ctx.stroke();ctx.beginPath();ctx.moveTo(bx,by-52);ctx.lineTo(bx,by+52);ctx.stroke();
     ctx.beginPath();ctx.arc(bx+dx,by+dy,24,0,Math.PI*2);ctx.fillStyle=`rgba(${actCol},${j.active?.55:.18})`;ctx.fill();ctx.strokeStyle=`rgba(${actCol},${j.active?.8:.3})`;ctx.lineWidth=2;ctx.stroke();
   }
-  jd(jL,100,H-105,"255,255,255");jd(jR,W-100,H-105,"34,211,238");
+  jd(jL,100,H-105,"255,255,255");jd(jRJ,W-100,H-105,"34,211,238");
   ctx.font="bold 10px Noto Sans KR";ctx.textAlign="center";ctx.textBaseline="top";ctx.fillStyle="rgba(255,255,255,.2)";
   ctx.fillText("이동",100,H-44);ctx.fillText("공격",W-100,H-44);
 }
