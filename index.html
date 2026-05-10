@@ -765,6 +765,21 @@ function startGameLoop(){
     // 적/총알
     processWaves();
     const saints=getActiveSaints();
+    // ✝ 성도의 견인: 모든 적 HP 지속 감소
+    if(pvsActive&&Date.now()<pvsEnd){
+      localEnemies.forEach(e=>{
+        const drain=Math.max(3, Math.floor(e.maxHp*0.025)); // 매 프레임 max HP의 2.5%씩 감소
+        e.hp=Math.max(0,e.hp-drain);
+        updateDoc(EREF(e.id),{hp:e.hp,dead:e.hp<=0}).catch(()=>{});
+        // 파티클
+        if(Math.random()<0.3){
+          particles.push({x:e.x+(Math.random()-.5)*20,y:e.y+(Math.random()-.5)*20,
+            vx:(Math.random()-.5)*2,vy:-1.5,r:4,life:0.8,col:"250,204,21"});
+        }
+        if(e.hp<=0){myXp+=ETYPES[e.type].xp;myKills++;checkLvl();}
+      });
+      localEnemies=localEnemies.filter(e=>e.hp>0);
+    }
     updateEnemies(saints);
     updateBullets(saints);
     // 승리: 성도 전원 도착
