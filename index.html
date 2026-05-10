@@ -847,6 +847,10 @@ function setupListeners(){
     // 견인은 게임 종료 시에만 해제 (자동 해제 없음)
     if(ns==="reset"&&!isGM){
       if(loopId)clearInterval(loopId);if(syncId)clearInterval(syncId);listenersSetup=false;
+      // 자기 문서 스스로 삭제
+      if(myUid){
+        try{ await setDoc(PREF(myUid),{alive:false},{merge:true}); }catch(_){}
+      }
       gameStartTime=0;heavenReached=false;pvsActive=false;localEnemies=[];processedWaves=new Set();localBullets=[];
       waveCount=0;lastWaveTime=0;
       document.getElementById("name-inp").value="";go("entry");
@@ -906,40 +910,40 @@ async function activatePVS(){
 
 // 배치를 안전하게 나눠서 실행 (Firestore 500건 제한 대응)
 async function safeBatchDelete(col){
-  const snap=await getDocs(col);
-  const docs=snap.docs;
-  for(let i=0;i<docs.length;i+=400){
-    const b=writeBatch(db);
-    docs.slice(i,i+400).forEach(d=>b.delete(d.ref));
-    await b.commit();
-  }
-}
-async function safeBatchUpdate(col,data){
-  const snap=await getDocs(col);
-  const docs=snap.docs;
-  for(let i=0;i<docs.length;i+=400){
-    const b=writeBatch(db);
-    docs.slice(i,i+400).forEach(d=>b.update(d.ref,typeof data==="function"?data(d):data));
-    await b.commit();
-  }
+  try{
+    const snap=await getDocs(col);
+    const docs=snap.docs;
+    for(let i=0;i<docs.length;i+=400){
+      const b=writeBatch(db);
+      docs.slice(i,i+400).forEach(d=>b.delete(d.ref));
+      await b.commit();
+    }
+  }catch(e){console.error("batch delete err:",e);}
 }
 
 async function startGame(){
   const now=Date.now();
-  // 플레이어 초기화 (배치 분할)
-  await safeBatchUpdate(PCOL,()=>({
-    alive:true,
-    x:SPAWN.x+Math.round((Math.random()-.5)*60),
-    y:SPAWN.y+Math.round((Math.random()-.5)*60),
-    hp:LEVELS[0].maxHp,maxHp:LEVELS[0].maxHp,level:0,xp:0,kills:0
-  }));
-  // 적 전체 삭제
+  // 적 삭제
   await safeBatchDelete(ECOL);
   // 성도 HP 초기화
   const sb=writeBatch(db);
   for(let i=0;i<NUM_SAINTS;i++)sb.set(doc(db,ROOT,"saints","s"+i),{hp:SAINT_MAX_HP});
   await sb.commit();
-  // 게임 시작
+  // 플레이어 배치 업데이트 (400건씩)
+  try{
+    const psnap=await getDocs(PCOL);
+    for(let i=0;i<psnap.docs.length;i+=400){
+      const b=writeBatch(db);
+      psnap.docs.slice(i,i+400).forEach(d=>{
+        b.update(d.ref,{alive:true,
+          x:SPAWN.x+Math.round((Math.random()-.5)*60),
+          y:SPAWN.y+Math.round((Math.random()-.5)*60),
+          hp:LEVELS[0].maxHp,maxHp:LEVELS[0].maxHp,level:0,xp:0,kills:0});
+      });
+      await b.commit();
+    }
+  }catch(e){console.error("player update err:",e);}
+  // 게임 시작 신호
   await setDoc(STATE,{
     gameStatus:"playing",gameStartTime:now,heavenReached:false,
     success:false,pvsVictory:false,
@@ -948,32 +952,29 @@ async function startGame(){
 }
 
 async function replayGame(){
-  // 다시하기: 플레이어는 그대로 (재입장 불필요), 게임만 리셋
   await startGame();
 }
 
 async function resetGame(){
   if(!confirm("초기화합니다. 모든 플레이어가 퇴장됩니다."))return;
 
-  // 1단계: 상태를 reset으로 → 모든 클라이언트 입장 화면으로 이동
+  // 1단계: reset 신호 → 각 클라이언트가 스스로 자기 문서 삭제 후 입장화면으로
   await setDoc(STATE,{
     gameStatus:"reset",gameStartTime:0,heavenReached:false,
     perseveranceActive:false,perseveranceEnd:0,gateOpen:false
   });
 
-  // 2단계: 잠시 후 데이터 전체 삭제
+  // 2단계: 3초 후 서버에서 남은 데이터 정리 + lobby로 전환
   setTimeout(async()=>{
-    try{
-      await safeBatchDelete(PCOL);
-      await safeBatchDelete(ECOL);
-      await safeBatchDelete(SCOL);
-    }catch(e){console.error("reset delete error:",e);}
-    // 3단계: lobby 상태로 복귀
+    await safeBatchDelete(ECOL);
+    await safeBatchDelete(SCOL);
+    // 플레이어 문서는 각자 클라이언트가 지웠으므로 남은 것만 정리
+    await safeBatchDelete(PCOL);
     await setDoc(STATE,{
       gameStatus:"lobby",gameStartTime:0,heavenReached:false,
       perseveranceActive:false,perseveranceEnd:0,gateOpen:false
     });
-  },1200);
+  },3000);
 }
 
 async function joinGame(){
